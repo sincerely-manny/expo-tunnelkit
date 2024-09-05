@@ -4,8 +4,8 @@
   "description": "Expo module/wrapper for Tunnelkit VPN client library for Apple platforms.",
   "licenses": [
     {
-      "type": "AGPL-3.0-only",
-      "url": "https://www.gnu.org/licenses/agpl-3.0.html"
+      "type": "GPL-3.0-only",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
     }
   ],
   "main": "build/index.js",
