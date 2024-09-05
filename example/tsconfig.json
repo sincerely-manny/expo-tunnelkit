@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-tunnelkit": ["../src/index"],
+      "expo-tunnelkit/*": ["../src/*"]
+    }
+  }
+}
