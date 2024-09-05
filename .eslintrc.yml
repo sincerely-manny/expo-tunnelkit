@@ -1,0 +1,28 @@
+extends:
+  - 'universe/native'
+  - 'universe/shared/typescript-analysis'
+  - 'plugin:import/recommended'
+  - 'plugin:import/typescript'
+  - 'plugin:react/recommended'
+  - 'expo'
+  - 'prettier'
+rules:
+  node/handle-callback-err: 0
+  lines-between-class-members:
+    - warn
+    - always
+    - exceptAfterSingleLine: true
+  spaced-comment:
+    - warn
+    - always
+  react/react-in-jsx-scope:
+    - off
+  "@typescript-eslint/consistent-type-imports":
+    - warn
+    - {
+        prefer: 'type-imports',
+        disallowTypeAnnotations: true,
+        fixStyle: 'separate-type-imports'
+      }
+ignorePatterns:
+  - 'build'

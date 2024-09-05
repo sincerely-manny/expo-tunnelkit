@@ -1,26 +1,157 @@
-import { NativeModulesProxy, EventEmitter, Subscription } from 'expo-modules-core';
+import type { SessionBuilder, VpnStatus } from './ExpoTunnelkit.types';
+import {
+  ExpoTunnelkitModule,
+  ExpoTunnelkitEmitter,
+} from './ExpoTunnelkitModule';
 
-// Import the native module. On web, it will be resolved to ExpoTunnelkit.web.ts
-// and on native platforms to ExpoTunnelkit.ts
-import ExpoTunnelkitModule from './ExpoTunnelkitModule';
-import ExpoTunnelkitView from './ExpoTunnelkitView';
-import { ChangeEventPayload, ExpoTunnelkitViewProps } from './ExpoTunnelkit.types';
-
-// Get the native constant value.
-export const PI = ExpoTunnelkitModule.PI;
-
-export function hello(): string {
-  return ExpoTunnelkitModule.hello();
+/**
+ * Setup VPN module with appGroup and tunnelIdentifier. Need to be called before any other VPN module methods.
+ * @param appGroup group identifier shared between the app and the app extension
+ * @param tunnelIdentifier identifier of the tunnel
+ * @returns `true` if the VPN module was set up successfully, `false` otherwise
+ * @example setup('group.com.example.app.tunnel', 'com.example.app.tunnelExtension');
+ */
+function setup(appGroup: string, tunnelIdentifier: string): boolean {
+  return ExpoTunnelkitModule.setup(appGroup, tunnelIdentifier);
 }
 
-export async function setValueAsync(value: string) {
-  return await ExpoTunnelkitModule.setValueAsync(value);
+/**
+ * Set the VPN credentials
+ * @param username
+ * @param password
+ * @returns `true` if the credentials were set successfully, `false` otherwise
+ */
+function setCredentials(username: string, password: string): boolean {
+  return ExpoTunnelkitModule.setCredentials(username, password);
 }
 
-const emitter = new EventEmitter(ExpoTunnelkitModule ?? NativeModulesProxy.ExpoTunnelkit);
-
-export function addChangeListener(listener: (event: ChangeEventPayload) => void): Subscription {
-  return emitter.addListener<ChangeEventPayload>('onChange', listener);
+/**
+ * Set VPN connection parameter. The parameters must be set before the VPN connection is established.
+ * You can set parameters manually or use `configFromUrl`/`configFromString` to set them from a configuration file.
+ * Parameters set manually after importing configuration from a file will override the parameters set from the file.
+ * @see configFromUrl
+ * @see configFromString
+ * @param key a parameter to be set
+ * @param value a value to be set
+ * @see SessionBuilder for the list of available parameters
+ * @returns `true` if the parameter was set successfully, `false` otherwise
+ * @example await setParam('Hostname', 'example.com');
+ * @example await setParam('Port', 443);
+ * @example await setParam('SocketType', 'TCP');
+ */
+function setParam<T extends keyof SessionBuilder>(
+  key: T,
+  value: SessionBuilder[T],
+): boolean {
+  return ExpoTunnelkitModule.setParam(key, JSON.stringify(value));
 }
 
-export { ExpoTunnelkitView, ExpoTunnelkitViewProps, ChangeEventPayload };
+/**
+ * Configure VPN connection from an .ovpn configuration file.
+ * You can modify set parameters using `setParam` method after importing the configuration.
+ * @param url URL of the configuration file
+ * @param passphrase The optional passphrase for encrypted data.
+ * @returns Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise
+ * @deprecated Not tested properly. Use `configFromString` instead.
+ */
+async function configFromUrl(
+  url: string,
+  passphrase?: string,
+): Promise<boolean> {
+  return ExpoTunnelkitModule.configFromUrl(url, passphrase);
+}
+
+/**
+ * Configure VPN connection from a configuration string (.ovpn file content).
+ * You can modify set parameters using `setParam` method after importing the configuration.
+ * @param config configuration string
+ * @param passphrase The optional passphrase for encrypted data.
+ * @returns Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise
+ */
+async function configFromString(
+  config: string,
+  passphrase?: string,
+): Promise<boolean> {
+  return ExpoTunnelkitModule.configFromString(config, passphrase);
+}
+
+/**
+ * Get current VPN connection status.
+ * Possible statuses are: 'Invalid' | 'Disconnected' | 'Connecting' | 'Connected' | 'Reasserting' | 'Disconnecting' | 'None' | 'Unknown'
+ * @returns Promise that resolves to the current `VpnStatus`
+ * @example const status = await getVpnStatus();
+ */
+async function getConnectionStatus() {
+  const status = (await ExpoTunnelkitModule.getVpnStatus()) as VpnStatus;
+  return status;
+}
+
+/**
+ * Connect to the VPN server. Sessin parameters must be set before calling this method.
+ * @returns Promise that resolves to `true` if the connection was successful, rejects with an error otherwise
+ * @example const connected = await connect();
+ */
+async function connect(): Promise<boolean> {
+  return ExpoTunnelkitModule.connect();
+}
+
+/**
+ * Disconnect from the VPN server.
+ * @returns Promise that resolves to `true` if the disconnection was successful, rejects with an error otherwise
+ * @example const disconnected = await disconnect();
+ */
+async function disconnect(): Promise<boolean> {
+  return ExpoTunnelkitModule.disconnect();
+}
+
+/**
+ * Add a listener to VPN status changes.
+ * @param listener a function that will be called when the VPN status changes
+ * @returns `Subscription` object that can be used to unsubscribe the listener
+ * @example addVpnStatusListener((state) => console.log(state.VPNStatus));
+ */
+function addVpnStatusListener(
+  listener: (state: { VPNStatus: VpnStatus }) => void,
+) {
+  return ExpoTunnelkitEmitter.addListener('VPNStatusDidChange', listener);
+}
+
+/**
+ * Get the current VPN connection configuration. Useful for debugging.
+ * @returns Promise that resolves to the current `SessionBuilder` configuration
+ * @example const config = await getCurrentConfig();
+ */
+function getCurrentConfig(): Promise<Record<keyof SessionBuilder, string>> {
+  return ExpoTunnelkitModule.getCurrentConfig();
+}
+
+/**
+ * VPN module methods wrapper.
+ * @example // Setup app group and tunnel identifier
+ * ExpoTunnelkit.setup('group.com.example.app.tunnel', 'com.example.app.tunnelExtension');
+ * // Set VPN credentials
+ * ExpoTunnelkit.setCredentials('username', 'password');
+ * // Add VPN status listener
+ * const subscription = ExpoTunnelkit.addVpnStatusListener((status) => console.log('Current status', status.VPNStatus));
+ * // Set VPN connection parameters
+ * await ExpoTunnelkit.configFromUrl('https://example.com/config.ovpn');
+ * ExpoTunnelkit.setParam('Hostname', 'example.com');
+ * // Connect to the VPN server
+ * await ExpoTunnelkit.connect();
+ * // Disconnect from the VPN server
+ * await ExpoTunnelkit.disconnect();
+ * // Remove VPN status listener
+ * subscription.remove();
+ */
+export const ExpoTunnelkit = {
+  setup,
+  setCredentials,
+  setParam,
+  configFromUrl,
+  configFromString,
+  getConnectionStatus,
+  connect,
+  disconnect,
+  addVpnStatusListener,
+  getCurrentConfig,
+};

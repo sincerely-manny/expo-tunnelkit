@@ -2,6 +2,12 @@
   "name": "expo-tunnelkit",
   "version": "0.1.0",
   "description": "Expo module/wrapper for Tunnelkit VPN client library for Apple platforms.",
+  "licenses": [
+    {
+      "type": "AGPL-3.0-only",
+      "url": "https://www.gnu.org/licenses/agpl-3.0.html"
+    }
+  ],
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
@@ -31,8 +37,18 @@
   "dependencies": {},
   "devDependencies": {
     "@types/react": "^18.0.25",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "^7.1.2",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-universe": "^13.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-exports": "^1.0.0-beta.5",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-react": "^7.35.2",
     "expo-module-scripts": "^3.5.2",
-    "expo-modules-core": "^1.12.20"
+    "expo-modules-core": "^1.12.20",
+    "prettier": "3.3.3"
   },
   "peerDependencies": {
     "expo": "*",
