@@ -41,6 +41,8 @@ target 'expotunnelkitexample' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
+  pod 'TunnelKit', :path => '../../vendor/tunnelkit'
+
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
@@ -76,4 +78,9 @@ target 'expotunnelkitexample' do
       Pod::UI.warn e
     end
   end
+end
+
+target 'TunnelKitNetworkExtension' do
+  pod 'TunnelKit', :path => '../../vendor/tunnelkit'
+  use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
 end
