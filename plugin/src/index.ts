@@ -228,7 +228,37 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       `${config.ios?.bundleIdentifier}.${NETWORK_EXTENSION_TARGET_NAME}`,
     );
 
-    // TODO: Add the correct build settings
+    // Add build phases
+    xcodeProject.addBuildPhase(
+      ['PacketTunnelProvider.swift'],
+      'PBXSourcesBuildPhase',
+      'Sources',
+      nseTarget.uuid,
+    );
+
+    xcodeProject.addBuildPhase(
+      [],
+      'PBXResourcesBuildPhase',
+      'Resources',
+      nseTarget.uuid,
+    );
+
+    xcodeProject.addBuildPhase(
+      [],
+      'PBXFrameworksBuildPhase',
+      'Frameworks',
+      nseTarget.uuid,
+    );
+
+    xcodeProject.addFramework('NetworkExtension.framework', {
+      target: nseTarget.uuid,
+    });
+
+    // // link with network extension framework
+    // xcodeProject.addFramework('NetworkExtension.framework', {
+    //   target: nseTarget.uuid,
+    //   link: false,
+    // });
 
     const devTeam = 'L427NWAC76'; // TODO: Add the development team
 
@@ -245,6 +275,7 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
         buildSettingsObj.TARGETED_DEVICE_FAMILY = `"1,2"`;
         buildSettingsObj.CODE_SIGN_ENTITLEMENTS = `${NETWORK_EXTENSION_TARGET_NAME}/${NETWORK_EXTENSION_TARGET_NAME}.entitlements`;
         buildSettingsObj.CODE_SIGN_STYLE = 'Automatic';
+        buildSettingsObj.SWIFT_VERSION = '5.0';
       }
     }
 
