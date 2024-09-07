@@ -10,10 +10,7 @@ export default function App() {
   const [ready, setReady] = useState(false);
 
   const init = useCallback(async () => {
-    ExpoTunnelkit.setup(
-      'group.expo.tk.example.TunnelKitNetworkExtension',
-      'expo.tk.exampl.TunnelKitNetworkExtension',
-    );
+    ExpoTunnelkit.setup();
     ExpoTunnelkit.setCredentials('freeopenvpn', '127461219');
     await ExpoTunnelkit.configFromString(ovpnConfig);
     setReady(true);

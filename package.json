@@ -34,7 +34,9 @@
   "author": "Kirill Serebryannyy <sincerely.manny@gmail.com> (https://github.com/sincerely-manny)",
   "license": "MIT",
   "homepage": "https://github.com/sincerely-manny/expo-tunnelkit#readme",
-  "dependencies": {},
+  "dependencies": {
+    "expo-constants": "^16.0.2"
+  },
   "devDependencies": {
     "@types/react": "^18.0.25",
     "eslint": "^8.57.0",

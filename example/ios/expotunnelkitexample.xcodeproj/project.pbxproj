@@ -10,36 +10,36 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		34E20757E6E7B9F098D695B4 /* libPods-TunnelKitNetworkExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 425B1341A3C80CE051518E21 /* libPods-TunnelKitNetworkExtension.a */; };
+		1E0A8627479D4A1490676585 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A3EF017248149068A920462 /* PacketTunnelProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		755C0BB7B80A42E6A1290153 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4B154AB941D44D1B774C86E /* PacketTunnelProvider.swift */; };
+		710571418CBA6AD8BBA47388 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FB0095878AB58BBBC66DF45F /* PrivacyInfo.xcprivacy */; };
+		715C590FFA2B4D4B9D264872 /* TunnelKitNetworkExtension.appex in Copy Files */ = {isa = PBXBuildFile; fileRef = 9D16B0A830E94FBEA3E235CF /* TunnelKitNetworkExtension.appex */; };
+		7B83D617BA29F0966D7EBD17 /* libPods-TunnelKitNetworkExtension.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ACE6916854C8C89505FED17 /* libPods-TunnelKitNetworkExtension.a */; };
+		8CF4E4F5FD5E4DD8A80A6DE8 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C660C7EE1CEE4E68A1A9CB97 /* NetworkExtension.framework */; };
 		96905EF65AED1B983A6B3ABC /* libPods-expotunnelkitexample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-expotunnelkitexample.a */; };
-		AAFA2CAC2BBD4262812025D9 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51A7D977D59D4CCCB205686C /* noop-file.swift */; };
+		AAB549B7291545CF9481E333 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC774CBEB6C4943A54FE53C /* noop-file.swift */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
-		B1BFE05FDE8C4E499428DB32 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE99C21D2E540AAAC4475F6 /* NetworkExtension.framework */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		D37E5065874B4FC980C2F1DB /* TunnelKitNetworkExtension.appex in Copy Files */ = {isa = PBXBuildFile; fileRef = B1E872DA754B4614ADB6AEB5 /* TunnelKitNetworkExtension.appex */; };
-		F28EDFCF31E0A650E17FFD12 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = F2B7DE03173C276B42A494E9 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D14C0A01F19D47598E10F537 /* PBXContainerItemProxy */ = {
+		69236CE02DFA4E188515E808 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = B7D45E7BC2654A94ADB6FA9E;
+			remoteGlobalIDString = 4DA5C1A6EE194D3596C42DF6;
 			remoteInfo = TunnelKitNetworkExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1D8104E611A348D5B1B7146D /* Copy Files */ = {
+		84B1E354016F4D6A895C08F4 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D37E5065874B4FC980C2F1DB /* TunnelKitNetworkExtension.appex in Copy Files */,
+				715C590FFA2B4D4B9D264872 /* TunnelKitNetworkExtension.appex in Copy Files */,
 			);
 			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,30 +47,30 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0A7BCBC988E4FBB8CF301BE9 /* Pods-TunnelKitNetworkExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TunnelKitNetworkExtension.release.xcconfig"; path = "Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension.release.xcconfig"; sourceTree = "<group>"; };
-		0DCAEF4F96EE40E1AFD42FA5 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* expotunnelkitexample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = expotunnelkitexample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = expotunnelkitexample/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = expotunnelkitexample/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = expotunnelkitexample/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = expotunnelkitexample/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = expotunnelkitexample/main.m; sourceTree = "<group>"; };
-		2EE99C21D2E540AAAC4475F6 /* NetworkExtension.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		425B1341A3C80CE051518E21 /* libPods-TunnelKitNetworkExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TunnelKitNetworkExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		51A7D977D59D4CCCB205686C /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "expotunnelkitexample/noop-file.swift"; sourceTree = "<group>"; };
+		1D9FF94242DB4FC4A9B4612F /* expotunnelkitexample-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "expotunnelkitexample-Bridging-Header.h"; path = "expotunnelkitexample/expotunnelkitexample-Bridging-Header.h"; sourceTree = "<group>"; };
+		28387B25DCFFC40B6DD24BCF /* Pods-TunnelKitNetworkExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TunnelKitNetworkExtension.release.xcconfig"; path = "Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension.release.xcconfig"; sourceTree = "<group>"; };
+		58916849604F40D987E47BF8 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		58EEBF8E8E6FB1BC6CAF49B5 /* libPods-expotunnelkitexample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-expotunnelkitexample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F8BF68EC957536534542876 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TunnelKitNetworkExtension.debug.xcconfig"; path = "Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-expotunnelkitexample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-expotunnelkitexample.debug.xcconfig"; path = "Target Support Files/Pods-expotunnelkitexample/Pods-expotunnelkitexample.debug.xcconfig"; sourceTree = "<group>"; };
+		7A3EF017248149068A920462 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-expotunnelkitexample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-expotunnelkitexample.release.xcconfig"; path = "Target Support Files/Pods-expotunnelkitexample/Pods-expotunnelkitexample.release.xcconfig"; sourceTree = "<group>"; };
-		A4B154AB941D44D1B774C86E /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
-		A605CFD0CCA245499A01FFAF /* TunnelKitNetworkExtension.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = TunnelKitNetworkExtension.entitlements; sourceTree = "<group>"; };
+		8ACE6916854C8C89505FED17 /* libPods-TunnelKitNetworkExtension.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TunnelKitNetworkExtension.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9D16B0A830E94FBEA3E235CF /* TunnelKitNetworkExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = 9; includeInIndex = 0; path = TunnelKitNetworkExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = expotunnelkitexample/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B1E872DA754B4614ADB6AEB5 /* TunnelKitNetworkExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; fileEncoding = 9; includeInIndex = 0; path = TunnelKitNetworkExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA297ACF4B72498EA6B4C130 /* TunnelKitNetworkExtension.entitlements */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; path = TunnelKitNetworkExtension.entitlements; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		C660C7EE1CEE4E68A1A9CB97 /* NetworkExtension.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		DFBD43A52967B7B0922A3F95 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TunnelKitNetworkExtension.debug.xcconfig"; path = "Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F2B7DE03173C276B42A494E9 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = expotunnelkitexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-expotunnelkitexample/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		FD80ACA2E79D48249A9DB7E4 /* expotunnelkitexample-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "expotunnelkitexample-Bridging-Header.h"; path = "expotunnelkitexample/expotunnelkitexample-Bridging-Header.h"; sourceTree = "<group>"; };
+		FB0095878AB58BBBC66DF45F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = expotunnelkitexample/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FFC774CBEB6C4943A54FE53C /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "expotunnelkitexample/noop-file.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,12 +82,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6F54F13C707F485389E1BAC2 /* Frameworks */ = {
+		AA56DE13A32C40BE99519C89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1BFE05FDE8C4E499428DB32 /* NetworkExtension.framework in Frameworks */,
-				34E20757E6E7B9F098D695B4 /* libPods-TunnelKitNetworkExtension.a in Frameworks */,
+				8CF4E4F5FD5E4DD8A80A6DE8 /* NetworkExtension.framework in Frameworks */,
+				7B83D617BA29F0966D7EBD17 /* libPods-TunnelKitNetworkExtension.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,9 +104,9 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				51A7D977D59D4CCCB205686C /* noop-file.swift */,
-				FD80ACA2E79D48249A9DB7E4 /* expotunnelkitexample-Bridging-Header.h */,
-				F2B7DE03173C276B42A494E9 /* PrivacyInfo.xcprivacy */,
+				FFC774CBEB6C4943A54FE53C /* noop-file.swift */,
+				1D9FF94242DB4FC4A9B4612F /* expotunnelkitexample-Bridging-Header.h */,
+				FB0095878AB58BBBC66DF45F /* PrivacyInfo.xcprivacy */,
 			);
 			name = expotunnelkitexample;
 			sourceTree = "<group>";
@@ -116,10 +116,20 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				58EEBF8E8E6FB1BC6CAF49B5 /* libPods-expotunnelkitexample.a */,
-				2EE99C21D2E540AAAC4475F6 /* NetworkExtension.framework */,
-				425B1341A3C80CE051518E21 /* libPods-TunnelKitNetworkExtension.a */,
+				C660C7EE1CEE4E68A1A9CB97 /* NetworkExtension.framework */,
+				8ACE6916854C8C89505FED17 /* libPods-TunnelKitNetworkExtension.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		67CDE29851C54760BE4C2829 /* TunnelKitNetworkExtension */ = {
+			isa = PBXGroup;
+			children = (
+				58916849604F40D987E47BF8 /* Info.plist */,
+				7A3EF017248149068A920462 /* PacketTunnelProvider.swift */,
+				AA297ACF4B72498EA6B4C130 /* TunnelKitNetworkExtension.entitlements */,
+			);
+			path = TunnelKitNetworkExtension;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -138,7 +148,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
-				ADE00399ED8F4084B86E134E /* TunnelKitNetworkExtension */,
+				67CDE29851C54760BE4C2829 /* TunnelKitNetworkExtension */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -149,7 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* expotunnelkitexample.app */,
-				B1E872DA754B4614ADB6AEB5 /* TunnelKitNetworkExtension.appex */,
+				9D16B0A830E94FBEA3E235CF /* TunnelKitNetworkExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,16 +170,6 @@
 				FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */,
 			);
 			name = expotunnelkitexample;
-			sourceTree = "<group>";
-		};
-		ADE00399ED8F4084B86E134E /* TunnelKitNetworkExtension */ = {
-			isa = PBXGroup;
-			children = (
-				0DCAEF4F96EE40E1AFD42FA5 /* Info.plist */,
-				A4B154AB941D44D1B774C86E /* PacketTunnelProvider.swift */,
-				A605CFD0CCA245499A01FFAF /* TunnelKitNetworkExtension.entitlements */,
-			);
-			path = TunnelKitNetworkExtension;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -186,8 +186,8 @@
 			children = (
 				6C2E3173556A471DD304B334 /* Pods-expotunnelkitexample.debug.xcconfig */,
 				7A4D352CD337FB3A3BF06240 /* Pods-expotunnelkitexample.release.xcconfig */,
-				5F8BF68EC957536534542876 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */,
-				0A7BCBC988E4FBB8CF301BE9 /* Pods-TunnelKitNetworkExtension.release.xcconfig */,
+				DFBD43A52967B7B0922A3F95 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */,
+				28387B25DCFFC40B6DD24BCF /* Pods-TunnelKitNetworkExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -208,34 +208,34 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "expotunnelkitexample" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				E8475FB1A60640D8EE129ACD /* [Expo] Configure project */,
+				FD1A1166FFC81793CFC5ED84 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				1D8104E611A348D5B1B7146D /* Copy Files */,
-				E5B372148F63CB57AB4BB847 /* [CP] Embed Pods Frameworks */,
+				84B1E354016F4D6A895C08F4 /* Copy Files */,
+				E4AFCEBA26798259DDD445B6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				23F33B21DA6F408F8CB9D7C6 /* PBXTargetDependency */,
+				A44F219331E1456690354D8A /* PBXTargetDependency */,
 			);
 			name = expotunnelkitexample;
 			productName = expotunnelkitexample;
 			productReference = 13B07F961A680F5B00A75B9A /* expotunnelkitexample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B7D45E7BC2654A94ADB6FA9E /* TunnelKitNetworkExtension */ = {
+		4DA5C1A6EE194D3596C42DF6 /* TunnelKitNetworkExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94C185CA2554447781DE3CD0 /* Build configuration list for PBXNativeTarget "TunnelKitNetworkExtension" */;
+			buildConfigurationList = 145A78E80BD4464F961F5925 /* Build configuration list for PBXNativeTarget "TunnelKitNetworkExtension" */;
 			buildPhases = (
-				2774AADA8259CD0D315EDC4B /* [CP] Check Pods Manifest.lock */,
-				CE78739EEE2545ECB2A4F588 /* Sources */,
-				6F54F13C707F485389E1BAC2 /* Frameworks */,
-				03B1056ED5DA429EBA89F4BF /* Resources */,
-				FFE8B97119FE87B8A677D06E /* [CP] Copy Pods Resources */,
+				DC6D39521D51517752F9B5AE /* [CP] Check Pods Manifest.lock */,
+				3ADEC2B33E4A46B59F01CF1F /* Sources */,
+				E5ADDCCBC11946779ECEEF68 /* Resources */,
+				AA56DE13A32C40BE99519C89 /* Frameworks */,
+				BDC12862B27A3D53EF9EF6F2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -243,7 +243,7 @@
 			);
 			name = TunnelKitNetworkExtension;
 			productName = TunnelKitNetworkExtension;
-			productReference = B1E872DA754B4614ADB6AEB5 /* TunnelKitNetworkExtension.appex */;
+			productReference = 9D16B0A830E94FBEA3E235CF /* TunnelKitNetworkExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -257,7 +257,7 @@
 					13B07F861A680F5B00A75B9A = {
 						LastSwiftMigration = 1250;
 					};
-					B7D45E7BC2654A94ADB6FA9E = {
+					4DA5C1A6EE194D3596C42DF6 = {
 						DevelopmentTeam = L427NWAC76;
 					};
 				};
@@ -276,19 +276,12 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* expotunnelkitexample */,
-				B7D45E7BC2654A94ADB6FA9E /* TunnelKitNetworkExtension */,
+				4DA5C1A6EE194D3596C42DF6 /* TunnelKitNetworkExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		03B1056ED5DA429EBA89F4BF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,7 +289,14 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				F28EDFCF31E0A650E17FFD12 /* PrivacyInfo.xcprivacy in Resources */,
+				710571418CBA6AD8BBA47388 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E5ADDCCBC11946779ECEEF68 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,28 +340,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		2774AADA8259CD0D315EDC4B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-TunnelKitNetworkExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -388,7 +366,47 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-expotunnelkitexample/Pods-expotunnelkitexample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E5B372148F63CB57AB4BB847 /* [CP] Embed Pods Frameworks */ = {
+		BDC12862B27A3D53EF9EF6F2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SwiftyBeaver.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC6D39521D51517752F9B5AE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TunnelKitNetworkExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4AFCEBA26798259DDD445B6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -408,7 +426,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-expotunnelkitexample/Pods-expotunnelkitexample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E8475FB1A60640D8EE129ACD /* [Expo] Configure project */ = {
+		FD1A1166FFC81793CFC5ED84 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -427,24 +445,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-expotunnelkitexample/expo-configure-project.sh\"\n";
 		};
-		FFE8B97119FE87B8A677D06E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension-resources.sh",
-				"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SwiftyBeaver.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TunnelKitNetworkExtension/Pods-TunnelKitNetworkExtension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -455,25 +455,25 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				AAFA2CAC2BBD4262812025D9 /* noop-file.swift in Sources */,
+				AAB549B7291545CF9481E333 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CE78739EEE2545ECB2A4F588 /* Sources */ = {
+		3ADEC2B33E4A46B59F01CF1F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				755C0BB7B80A42E6A1290153 /* PacketTunnelProvider.swift in Sources */,
+				1E0A8627479D4A1490676585 /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		23F33B21DA6F408F8CB9D7C6 /* PBXTargetDependency */ = {
+		A44F219331E1456690354D8A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B7D45E7BC2654A94ADB6FA9E /* TunnelKitNetworkExtension */;
-			targetProxy = D14C0A01F19D47598E10F537 /* PBXContainerItemProxy */;
+			target = 4DA5C1A6EE194D3596C42DF6 /* TunnelKitNetworkExtension */;
+			targetProxy = 69236CE02DFA4E188515E808 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -505,7 +505,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.exampl;
+				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.example;
 				PRODUCT_NAME = expotunnelkitexample;
 				SWIFT_OBJC_BRIDGING_HEADER = "expotunnelkitexample/expotunnelkitexample-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -537,7 +537,7 @@
 					"-lc++",
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.exampl;
+				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.example;
 				PRODUCT_NAME = expotunnelkitexample;
 				SWIFT_OBJC_BRIDGING_HEADER = "expotunnelkitexample/expotunnelkitexample-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -671,9 +671,9 @@
 			};
 			name = Release;
 		};
-		86AEB6866D3542B5A4845AB2 /* Release */ = {
+		9A2A9F31A3214FB48FA0A930 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A7BCBC988E4FBB8CF301BE9 /* Pods-TunnelKitNetworkExtension.release.xcconfig */;
+			baseConfigurationReference = 28387B25DCFFC40B6DD24BCF /* Pods-TunnelKitNetworkExtension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TunnelKitNetworkExtension/TunnelKitNetworkExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -688,7 +688,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.exampl.TunnelKitNetworkExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.example.TunnelKitNetworkExtension;
 				PRODUCT_NAME = TunnelKitNetworkExtension;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -696,9 +696,9 @@
 			};
 			name = Release;
 		};
-		CABC451281B44E38BB30FC90 /* Debug */ = {
+		C06F65E9F00E4547A47202F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5F8BF68EC957536534542876 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */;
+			baseConfigurationReference = DFBD43A52967B7B0922A3F95 /* Pods-TunnelKitNetworkExtension.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = TunnelKitNetworkExtension/TunnelKitNetworkExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -717,7 +717,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.exampl.TunnelKitNetworkExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = expo.tk.example.TunnelKitNetworkExtension;
 				PRODUCT_NAME = TunnelKitNetworkExtension;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -737,20 +737,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		145A78E80BD4464F961F5925 /* Build configuration list for PBXNativeTarget "TunnelKitNetworkExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06F65E9F00E4547A47202F4 /* Debug */,
+				9A2A9F31A3214FB48FA0A930 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "expotunnelkitexample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		94C185CA2554447781DE3CD0 /* Build configuration list for PBXNativeTarget "TunnelKitNetworkExtension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CABC451281B44E38BB30FC90 /* Debug */,
-				86AEB6866D3542B5A4845AB2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

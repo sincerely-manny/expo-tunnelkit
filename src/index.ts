@@ -1,17 +1,46 @@
+import Constants from 'expo-constants';
+
+// eslint-disable-next-line
+import { NETWORK_EXTENSION_TARGET_NAME } from '../plugin/src/constants';
 import type { SessionBuilder, VpnStatus } from './ExpoTunnelkit.types';
 import {
-  ExpoTunnelkitModule,
   ExpoTunnelkitEmitter,
+  ExpoTunnelkitModule,
 } from './ExpoTunnelkitModule';
 
+type SetupOptions = {
+  appGroup?: string;
+  tunnelIdentifier?: string;
+};
 /**
- * Setup VPN module with appGroup and tunnelIdentifier. Need to be called before any other VPN module methods.
- * @param appGroup group identifier shared between the app and the app extension
- * @param tunnelIdentifier identifier of the tunnel
- * @returns `true` if the VPN module was set up successfully, `false` otherwise
- * @example setup('group.com.example.app.tunnel', 'com.example.app.tunnelExtension');
+ * Setup VPN module with appGroup and tunnelIdentifier. This method should be called before any other VPN module methods.
+ * If options are not provided, the appGroup and tunnelIdentifier will be set to the default values based on the app's bundle identifier set in app.json.
+ * @param {SetupOptions} options - The setup options.
+ * @param {string} [options.appGroup] - Group identifier shared between the app and the app extension.
+ * @param {string} [options.tunnelIdentifier] - Identifier of the network extension.
+ *
+ * @returns {boolean} `true` if the VPN module was set up successfully, `false` otherwise.
+ *
+ * @example
+ * // Example usage:
+ * setup({
+ *  appGroup: 'group.com.example.app.tunnel',
+ *  tunnelIdentifier: 'com.example.app.tunnelExtension',
+ * });
  */
-function setup(appGroup: string, tunnelIdentifier: string): boolean {
+function setup(options?: SetupOptions): boolean {
+  const bundle =
+    Constants.expoConfig?.ios?.bundleIdentifier ??
+    Constants.manifest.ios.bundleIdentifier;
+  const appGroup =
+    options?.appGroup ?? `group.${bundle}.${NETWORK_EXTENSION_TARGET_NAME}`;
+  const tunnelIdentifier =
+    options?.tunnelIdentifier ?? `${bundle}.${NETWORK_EXTENSION_TARGET_NAME}`;
+  if (!appGroup || !tunnelIdentifier) {
+    throw new Error(
+      'appGroup and tunnelIdentifier must be provided or set in app.json',
+    );
+  }
   return ExpoTunnelkitModule.setup(appGroup, tunnelIdentifier);
 }
 
