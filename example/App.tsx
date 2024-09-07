@@ -1,5 +1,4 @@
-import { ExpoTunnelkit } from 'expo-tunnelkit';
-import { VpnStatus } from 'expo-tunnelkit/ExpoTunnelkit.types';
+import ExpoTunnelkit, { VpnStatus } from 'expo-tunnelkit';
 import { useCallback, useEffect, useState } from 'react';
 import { Button, Text, View } from 'react-native';
 
