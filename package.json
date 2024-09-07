@@ -8,6 +8,7 @@
       "url": "https://www.gnu.org/licenses/gpl-3.0.html"
     }
   ],
+  "license": "GPL-3.0-only",
   "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
