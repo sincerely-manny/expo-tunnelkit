@@ -248,9 +248,10 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       target: nseTarget.uuid,
     });
 
+    // N.B. Untested!
     const devTeam =
       xcodeProject?.getFirstTarget()?.firstTarget?.buildConfigurationList
-        ?.buildConfigurations[0]?.buildSettings?.DEVELOPMENT_TEAM;
+        ?.buildConfigurations?.[0]?.buildSettings?.DEVELOPMENT_TEAM;
 
     const configurations = xcodeProject.pbxXCBuildConfigurationSection();
     for (const key in configurations) {
