@@ -258,7 +258,7 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       if (
         typeof configurations[key].buildSettings !== 'undefined' &&
         configurations[key].buildSettings.PRODUCT_NAME ===
-          `"${NETWORK_EXTENSION_TARGET_NAME}"`
+        `"${NETWORK_EXTENSION_TARGET_NAME}"`
       ) {
         const buildSettingsObj = configurations[key].buildSettings;
         if (devTeam) {
@@ -301,16 +301,12 @@ export default withTunnelKit;
 function getModulePath() {
   let modulePath: string = '';
   try {
-    modulePath = require.resolve('expo-tunnelkit');
+    modulePath = path.dirname(require.resolve('expo-tunnelkit/package.json'));
   } catch {
-    try {
-      modulePath = require.resolve('expo-tunnelkit/package.json');
-    } catch {
-      console.error(
-        `Couldn't find the package "expo-tunnelkit". Falling back to the local filesystem.`,
-      );
-      modulePath = '../';
-    }
+    console.error(
+      `Couldn't find the package "expo-tunnelkit". Falling back to the local filesystem.`,
+    );
+    modulePath = '../';
   }
   return modulePath;
 }
