@@ -1,5 +1,4 @@
-export const ovpnConfig = `
-###############################
+export const ovpnConfig = `###############################
 # FreeOpenVPN.Org config file #
 # https://www.freeopenvpn.org #
 ###############################
@@ -175,5 +174,4 @@ QqyzeTsVjRNwYmVxNWdHj4BBuVNDbhJBjQeDdVpiBi4sOXHOy36QKt0sUJW4KtkV
 4dCteRmwX9fkLWB6XbvvqFroyNN0b9MFkyFwtWk/94+o3vSBVEIZxW4uFlZk2JSM
 0/SurpADpWk8R+/uZVjgXCk9BGT9fw==
 -----END PRIVATE KEY-----
-</key>
-`;
+</key>`;

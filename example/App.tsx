@@ -11,8 +11,8 @@ export default function App() {
 
   const init = useCallback(async () => {
     ExpoTunnelkit.setup(
-      'group.com.appstrain.ahvpn.VpnProvider',
-      'com.appstrain.ahvpn.VpnProvider',
+      'group.expo.tk.example.TunnelKitNetworkExtension',
+      'expo.tk.exampl.TunnelKitNetworkExtension',
     );
     ExpoTunnelkit.setCredentials('freeopenvpn', '127461219');
     await ExpoTunnelkit.configFromString(ovpnConfig);
@@ -31,29 +31,37 @@ export default function App() {
   }, []);
 
   return (
-    <View style={{ justifyContent: 'center', flex: 1, alignContent: 'center' }}>
-      <Text>Home</Text>
+    <View style={{ paddingHorizontal: 20, paddingVertical: 100, gap: 20 }}>
+      <Text>Demo</Text>
       <View
         style={{
           opacity: ready ? 1 : 0.5,
           flexDirection: 'row',
           gap: 8,
+          alignContent: 'center',
+          justifyContent: 'center',
         }}
       >
         <Button
-          title="Connect"
+          title="🌍 Connect"
           onPress={ExpoTunnelkit.connect}
           disabled={!ready}
         />
+        <View style={{ width: 1, backgroundColor: 'black' }} />
         <Button
-          title="Disconnect"
+          title="❌ Disconnect"
           onPress={ExpoTunnelkit.disconnect}
           disabled={!ready}
         />
       </View>
       <View>
         <Text>
-          {status === 'Connected' ? '🟢' : '🔴'} Status: {status}
+          {status === 'Connected'
+            ? '🟢'
+            : status === 'Disconnected'
+              ? '🔴'
+              : '🟡'}{' '}
+          {status}
         </Text>
       </View>
     </View>
