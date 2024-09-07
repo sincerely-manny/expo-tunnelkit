@@ -1,12 +1,12 @@
 import Constants from 'expo-constants';
 
-// eslint-disable-next-line
-import { NETWORK_EXTENSION_TARGET_NAME } from '../plugin/src/constants';
 import type { SessionBuilder, VpnStatus } from './ExpoTunnelkit.types';
 import {
   ExpoTunnelkitEmitter,
   ExpoTunnelkitModule,
 } from './ExpoTunnelkitModule';
+
+const NETWORK_EXTENSION_TARGET_NAME = 'TunnelKitNetworkExtension';
 
 type SetupOptions = {
   appGroup?: string;
@@ -172,7 +172,7 @@ function getCurrentConfig(): Promise<Record<keyof SessionBuilder, string>> {
  * // Remove VPN status listener
  * subscription.remove();
  */
-export const ExpoTunnelkit = {
+const ExpoTunnelkit = {
   setup,
   setCredentials,
   setParam,
@@ -184,3 +184,5 @@ export const ExpoTunnelkit = {
   addVpnStatusListener,
   getCurrentConfig,
 };
+
+export default ExpoTunnelkit;
