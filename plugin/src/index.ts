@@ -103,28 +103,12 @@ const withNetworkExtensionFiles: ConfigPlugin = (config) => {
  * Modify Podfile to include the Network Extension target and add the necessary dependencies
  */
 const withUpdatedPodfile: ConfigPlugin = (config) => {
-  const mainTarget: string | null = 'expotunnelkitexample';
-  // TODO: Find the main target name
-
-  // let mainTarget: string | null = null;
-  // withXcodeProject(config, (newConfig) => {
-  //   const xcodeProject = newConfig.modResults;
-  //   console.log(xcodeProject.getFirstTarget().firstTarget.name);
-  //   mainTarget = xcodeProject.getFirstTarget()?.firstTarget?.name;
-  //   return newConfig;
-  // });
-  // if (!mainTarget) {
-  //   console.error('Failed to find the main target in the Xcode project');
-  //   return config;
-  // }
-
   let modulePath = getModulePath();
   if (modulePath === '../') {
     modulePath = '../../';
   }
   const podPath = path.join(modulePath, 'vendor', 'tunnelkit');
   const newPodLine = `pod 'TunnelKit', :path => '${podPath}'`;
-  const targetLine = `target '${mainTarget}' do`;
   const reactNativeLine = 'use_react_native!';
   const newTargetSnippet = `target '${NETWORK_EXTENSION_TARGET_NAME}' do
   ${newPodLine}
@@ -133,6 +117,16 @@ end`;
 
   return withPodfile(config, (newConfig) => {
     let { contents } = newConfig.modResults;
+
+    const mainTarget =
+      newConfig.modRequest.projectName ?? extractMainTarget(contents);
+
+    if (!mainTarget) {
+      console.error('Failed to extract the main target from the Podfile');
+      return newConfig;
+    }
+
+    const targetLine = `target '${mainTarget}' do`;
 
     if (!contents.includes(newPodLine)) {
       const lines = contents.split('\n');
@@ -254,7 +248,9 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       target: nseTarget.uuid,
     });
 
-    const devTeam = 'L427NWAC76'; // TODO: Add the development team
+    const devTeam =
+      xcodeProject?.getFirstTarget()?.firstTarget?.buildConfigurationList
+        ?.buildConfigurations[0]?.buildSettings?.DEVELOPMENT_TEAM;
 
     const configurations = xcodeProject.pbxXCBuildConfigurationSection();
     for (const key in configurations) {
@@ -264,7 +260,9 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
           `"${NETWORK_EXTENSION_TARGET_NAME}"`
       ) {
         const buildSettingsObj = configurations[key].buildSettings;
-        buildSettingsObj.DEVELOPMENT_TEAM = devTeam;
+        if (devTeam) {
+          buildSettingsObj.DEVELOPMENT_TEAM = devTeam;
+        }
         buildSettingsObj.IPHONEOS_DEPLOYMENT_TARGET = '13.4';
         buildSettingsObj.TARGETED_DEVICE_FAMILY = `"1,2"`;
         buildSettingsObj.CODE_SIGN_ENTITLEMENTS = `${NETWORK_EXTENSION_TARGET_NAME}/${NETWORK_EXTENSION_TARGET_NAME}.entitlements`;
@@ -276,8 +274,10 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       }
     }
 
-    xcodeProject.addTargetAttribute('DevelopmentTeam', devTeam, nseTarget);
-    xcodeProject.addTargetAttribute('DevelopmentTeam', devTeam);
+    if (devTeam) {
+      xcodeProject.addTargetAttribute('DevelopmentTeam', devTeam, nseTarget);
+      xcodeProject.addTargetAttribute('DevelopmentTeam', devTeam);
+    }
     return newConfig;
   });
 };
@@ -312,4 +312,17 @@ function getModulePath() {
     }
   }
   return modulePath;
+}
+
+function extractMainTarget(podfile: string): string | null {
+  // Regular expression to find the main target with "use_expo_modules!"
+  const targetRegex = /target ['"]([^'"]+)['"]\s+do[\s\S]*?use_expo_modules!/;
+
+  const match = podfile.match(targetRegex);
+
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  return null;
 }
