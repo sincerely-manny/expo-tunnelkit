@@ -32,7 +32,6 @@
     "url": "https://github.com/sincerely-manny/expo-tunnelkit/issues"
   },
   "author": "Kirill Serebryannyy <sincerely.manny@gmail.com> (https://github.com/sincerely-manny)",
-  "license": "MIT",
   "homepage": "https://github.com/sincerely-manny/expo-tunnelkit#readme",
   "dependencies": {
     "expo-constants": "^16.0.2"
