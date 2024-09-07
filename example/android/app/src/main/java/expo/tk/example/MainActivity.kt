@@ -1,4 +1,4 @@
-package expo.modules.tunnelkit.example
+package expo.tk.example
 
 import android.os.Build
 import android.os.Bundle

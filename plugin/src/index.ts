@@ -254,12 +254,6 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       target: nseTarget.uuid,
     });
 
-    // // link with network extension framework
-    // xcodeProject.addFramework('NetworkExtension.framework', {
-    //   target: nseTarget.uuid,
-    //   link: false,
-    // });
-
     const devTeam = 'L427NWAC76'; // TODO: Add the development team
 
     const configurations = xcodeProject.pbxXCBuildConfigurationSection();
@@ -276,6 +270,9 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
         buildSettingsObj.CODE_SIGN_ENTITLEMENTS = `${NETWORK_EXTENSION_TARGET_NAME}/${NETWORK_EXTENSION_TARGET_NAME}.entitlements`;
         buildSettingsObj.CODE_SIGN_STYLE = 'Automatic';
         buildSettingsObj.SWIFT_VERSION = '5.0';
+        buildSettingsObj.INFOPLIST_FILE = `${NETWORK_EXTENSION_TARGET_NAME}/Info.plist`;
+        buildSettingsObj.MARKETING_VERSION = '1.0.0';
+        buildSettingsObj.CURRENT_PROJECT_VERSION = '1';
       }
     }
 
@@ -289,10 +286,10 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
  * Run all the necessary plugins to add the TunnelKit to the project
  */
 const withTunnelKit: ConfigPlugin = (config) => {
+  config = withNetworkExtensionFiles(config);
   config = withNetworkExtensionCapabilities(config);
   config = withAppGroupCapabilities(config);
   config = withKeychainSharingCapabilities(config);
-  config = withNetworkExtensionFiles(config);
   config = withUpdatedPodfile(config);
   config = withXcodeProjectTarget(config);
   return config;

@@ -109,9 +109,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'expo.modules.tunnelkit.example'
+    namespace 'expo.tk.example'
     defaultConfig {
-        applicationId 'expo.modules.tunnelkit.example'
+        applicationId 'expo.tk.example'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

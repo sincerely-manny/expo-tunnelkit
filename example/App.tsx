@@ -31,7 +31,7 @@ export default function App() {
   }, []);
 
   return (
-    <View>
+    <View style={{ justifyContent: 'center', flex: 1, alignContent: 'center' }}>
       <Text>Home</Text>
       <View
         style={{
