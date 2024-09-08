@@ -1,6 +1,10 @@
 import Constants from 'expo-constants';
 
-import type { SessionBuilder, VpnStatus } from './ExpoTunnelkit.types';
+import type {
+  SessionBuilder,
+  VpnDataCount,
+  VpnStatus,
+} from './ExpoTunnelkit.types';
 import {
   ExpoTunnelkitEmitter,
   ExpoTunnelkitModule,
@@ -72,7 +76,11 @@ function setParam<T extends keyof SessionBuilder>(
   key: T,
   value: SessionBuilder[T],
 ): boolean {
-  return ExpoTunnelkitModule.setParam(key, JSON.stringify(value));
+  const v =
+    typeof value === 'object' || typeof value === 'boolean'
+      ? JSON.stringify(value)
+      : value;
+  return ExpoTunnelkitModule.setParam(key, v);
 }
 
 /**
@@ -155,6 +163,21 @@ function getCurrentConfig(): Promise<Record<keyof SessionBuilder, string>> {
 }
 
 /**
+ * Get the current VPN connection (sessin) data count.
+ * @returns Promise that resolves to the current `VpnDataCount` object, rejects with an error if the data count is not available
+ *
+ * `dataIn` - the number of bytes received
+ *
+ * `dataOut` - the number of bytes sent
+ *
+ * `interval` - the interval in milliseconds between data count updates
+ * @example const dataCount = await getDataCount();
+ */
+function getDataCount(): Promise<VpnDataCount> {
+  return ExpoTunnelkitModule.getDataCount();
+}
+
+/**
  * VPN module methods wrapper.
  * @example // Setup app group and tunnel identifier
  * ExpoTunnelkit.setup('group.com.example.app.tunnel', 'com.example.app.tunnelExtension');
@@ -183,8 +206,9 @@ const ExpoTunnelkit = {
   disconnect,
   addVpnStatusListener,
   getCurrentConfig,
+  getDataCount,
 };
 
 export default ExpoTunnelkit;
 
-export type { VpnStatus, SessionBuilder };
+export type { SessionBuilder, VpnStatus };

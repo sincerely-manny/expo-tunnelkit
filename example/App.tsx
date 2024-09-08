@@ -7,11 +7,14 @@ import { ovpnConfig } from './ovpn-config';
 export default function App() {
   const [status, setStatus] = useState<VpnStatus>('Unknown');
   const [ready, setReady] = useState(false);
+  const [dataCount, setDataCount] = useState({ dataIn: 0, dataOut: 0 });
 
   const init = useCallback(async () => {
     ExpoTunnelkit.setup();
-    ExpoTunnelkit.setCredentials('freeopenvpn', '127461219');
+    ExpoTunnelkit.setCredentials('openvpn', 'k3Jbv5Lzbiaz');
     await ExpoTunnelkit.configFromString(ovpnConfig);
+    ExpoTunnelkit.setParam('Hostname', '192.168.2.100');
+    ExpoTunnelkit.setParam('UsesPIAPatches', true);
     setReady(true);
   }, []);
 
@@ -20,9 +23,21 @@ export default function App() {
       console.log('Current status', status.VPNStatus);
       setStatus(status.VPNStatus);
     });
+    const interval = setInterval(() => {
+      ExpoTunnelkit.getDataCount()
+        .then((data) => {
+          console.log('Data count', data);
+          setDataCount(data);
+        })
+        .catch((error) => {
+          console.log('Error getting data count', error);
+        });
+    }, 1000);
+
     init();
     return () => {
       subscription.remove();
+      clearInterval(interval);
     };
   }, []);
 
@@ -58,6 +73,10 @@ export default function App() {
               ? '🔴'
               : '🟡'}{' '}
           {status}
+        </Text>
+        <Text>
+          ⬇️ Recieved: {(dataCount.dataIn / 1e6).toFixed(2)} MB | ⬆️ Sent:
+          {(dataCount.dataOut / 1e6).toFixed(2)} MB
         </Text>
       </View>
     </View>

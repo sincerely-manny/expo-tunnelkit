@@ -225,6 +225,28 @@ Get the current VPN connection configuration. Useful for debugging.
 
 **Returns** Promise that resolves to the current `SessionBuilder` configuration.
 
+### `ExpoTunnelkit.getDataCount`
+
+```typescript
+function getDataCount(): Promise<VpnDataCount>;
+
+type VpnDataCount = {
+  dataIn: number;
+  dataOut: number;
+  interval: number;
+};
+```
+
+Get the amount of data transferred over the VPN connection during current session (in bytes). `dataIn` is the amount of data received, `dataOut` is the amount of data sent, `interval` is the time interval between internal data count updates (in milliseconds).
+
+Data count interval is set to 1 second by default. You can change it by setting `DataCountInterval` parameter (in milliseconds) using `setParam` method. Setting it to 0 will disable data count checks.
+
+```typescript
+ExpoTunnelkit.setParam('DataCountInterval', 1000);
+```
+
+**Returns** Promise that resolves to the `VpnDataCount` object.
+
 ## Types
 
 ### `SessionBuilder`
@@ -266,6 +288,7 @@ type SessionBuilder = {
   ProxyAutoConfigurationURL: string;
   ProxyBypassDomains: string[];
   RoutingPolicies: RoutingPolicy[];
+  DataCountInterval: number;
 };
 ```
 
@@ -281,6 +304,16 @@ type VpnStatus =
   | 'Disconnecting'
   | 'None'
   | 'Unknown';
+```
+
+### `VpnDataCount`
+
+```typescript
+type VpnDataCount = {
+  dataIn: number;
+  dataOut: number;
+  interval: number;
+};
 ```
 
 ### `Cipher`
@@ -402,5 +435,11 @@ Run the example app:
 npm run ios
 ```
 
+To debug VPN client you can set up a local VPN server using [this](https://openvpn.net/as-docs/docker.html#run-the-docker-container) guide. It's worth mentioning that by default the server uses tls-crypt-v2 which is **not supported** by the client. After starting up docker container go to admin panel and create a new profile **without tls-crypt-v2.**
+
 Fix all the buggs, add new features, create a pull request.
 Drink water, listen to your mom, and don't forget to go out and touch some grass from time to time.
+
+## Known issues
+
+- tls-crypt-v2 is not supported. If you're willing to implement it, it's recommended to start from [here](https://github.com/sincerely-manny/expo-tunnelkit/blob/main/vendor/tunnelkit/TunnelKit/Sources/Protocols/OpenVPN/ConfigurationParser.swift)

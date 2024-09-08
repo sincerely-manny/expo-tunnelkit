@@ -1,9 +1,9 @@
 import {
-  ConfigPlugin,
-  withDangerousMod,
-  withEntitlementsPlist,
-  withPodfile,
-  withXcodeProject,
+    ConfigPlugin,
+    withDangerousMod,
+    withEntitlementsPlist,
+    withPodfile,
+    withXcodeProject,
 } from 'expo/config-plugins';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -258,7 +258,7 @@ const withXcodeProjectTarget: ConfigPlugin = (config) => {
       if (
         typeof configurations[key].buildSettings !== 'undefined' &&
         configurations[key].buildSettings.PRODUCT_NAME ===
-        `"${NETWORK_EXTENSION_TARGET_NAME}"`
+          `"${NETWORK_EXTENSION_TARGET_NAME}"`
       ) {
         const buildSettingsObj = configurations[key].buildSettings;
         if (devTeam) {

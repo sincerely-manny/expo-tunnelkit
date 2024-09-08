@@ -40,8 +40,11 @@ public class ExpoTunnelkitModule: Module {
   private var status = NEVPNStatus.invalid
   private var currentManager: NETunnelProviderManager?
 
+  private var dataCountInterval: Int = 1000
+
   private var sessionBuilder = OpenVPN.ConfigurationBuilder()
   private var builtSession: OpenVPN.Configuration?
+  private var openVPNTunnelProviderConfiguration: OpenVPNTunnelProvider.Configuration?
 
   private var appGroup: String?
   private var tunnelIdentifier: String?
@@ -55,7 +58,7 @@ public class ExpoTunnelkitModule: Module {
 
   private func setTlsWrap() {
     if let key = tlsWrapKeyData, let strategy = tlsWrapStrategy {
-      var tlsKey = OpenVPN.StaticKey(data: key, direction: tlsWrapKeyDirection)
+      let tlsKey = OpenVPN.StaticKey(data: key, direction: tlsWrapKeyDirection)
       sessionBuilder.tlsWrap = OpenVPN.TLSWrap(strategy: strategy, key: tlsKey)
     }
   }
@@ -85,6 +88,10 @@ public class ExpoTunnelkitModule: Module {
       return nil
     }
 
+    let userDefaults = UserDefaults(suiteName: appGroup)
+    // Update the interval in UserDefaults
+    userDefaults?.set(dataCountInterval, forKey: "dataCountInterval")
+
     let credentials = OpenVPN.Credentials(self.username ?? "", self.password ?? "")
     var builder = OpenVPNTunnelProvider.ConfigurationBuilder(
       sessionConfiguration: self.sessionBuilder.build()
@@ -98,6 +105,8 @@ public class ExpoTunnelkitModule: Module {
     builder.masksPrivateData = self.tunnelProviderSettings.masksPrivateData
 
     let configuration = builder.build()
+    //      configuration.dataCount(in: appGroup)
+    self.openVPNTunnelProviderConfiguration = configuration
     do {
       let p = try configuration.generatedTunnelProtocol(
         withBundleIdentifier: tunnelIdentifier,
@@ -516,6 +525,9 @@ public class ExpoTunnelkitModule: Module {
           break
         }
 
+      case "DataCountInterval":
+        self.dataCountInterval = Int(value) ?? 1000
+
       default:
         return false
       }
@@ -581,7 +593,7 @@ public class ExpoTunnelkitModule: Module {
           Exception(
             name: "ExpoTunnelkitModuleError",
             description:
-              "Missing required VPN parameters (username, password, or hostname). \(self.username ?? ""), \(self.password ?? ""), \(sessionBuilder.hostname ?? "")"
+              "Missing required VPN parameters (username, password, or hostname)."
           ))
         return
       }
@@ -689,6 +701,33 @@ public class ExpoTunnelkitModule: Module {
       result["ProxyBypassDomains"] = config.proxyBypassDomains
       result["RoutingPolicies"] = config.routingPolicies
       promise.resolve(result)
+    }
+
+    AsyncFunction("getDataCount") { (promise: Promise) in
+      guard let appGroup = self.appGroup,
+        let configuration = self.openVPNTunnelProviderConfiguration
+      else {
+        promise.reject(
+          Exception(
+            name: "ExpoTunnelkitModuleError",
+            description: "Connection is not established"
+          ))
+        return
+      }
+      guard let dataCount = configuration.dataCount(in: appGroup) else {
+        promise.reject(
+          Exception(
+            name: "ExpoTunnelkitModuleError",
+            description: "Failed to get data count"
+          ))
+        return
+      }
+      let response = [
+        "dataIn": UInt64(dataCount.0),
+        "dataOut": UInt64(dataCount.1),
+        "interval": self.dataCountInterval,
+      ]
+      promise.resolve(response)
     }
   }
 

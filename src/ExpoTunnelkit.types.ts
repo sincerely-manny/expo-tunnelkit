@@ -73,6 +73,7 @@ export type SessionBuilder = {
   ProxyAutoConfigurationURL: string;
   ProxyBypassDomains: string[];
   RoutingPolicies: RoutingPolicy[];
+  DataCountInterval: number; // milliseconds between data count updates (0 to disable, default 1000)
 };
 
 export type VpnStatus =
@@ -84,3 +85,9 @@ export type VpnStatus =
   | 'Disconnecting'
   | 'None'
   | 'Unknown';
+
+export type VpnDataCount = {
+  dataIn: number;
+  dataOut: number;
+  interval: number;
+};
