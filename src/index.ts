@@ -211,4 +211,4 @@ const ExpoTunnelkit = {
 
 export default ExpoTunnelkit;
 
-export type { SessionBuilder, VpnStatus };
+export type { SessionBuilder, VpnStatus, VpnDataCount };
