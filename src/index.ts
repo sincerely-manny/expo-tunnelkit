@@ -23,8 +23,6 @@ type SetupOptions = {
  * @param {string} [options.appGroup] - Group identifier shared between the app and the app extension.
  * @param {string} [options.tunnelIdentifier] - Identifier of the network extension.
  *
- * @returns {boolean} `true` if the VPN module was set up successfully, `false` otherwise.
- *
  * @example
  * // Example usage:
  * setup({
@@ -32,7 +30,7 @@ type SetupOptions = {
  *  tunnelIdentifier: 'com.example.app.tunnelExtension',
  * });
  */
-function setup(options?: SetupOptions): boolean {
+function setup(options?: SetupOptions) {
   const bundle =
     Constants.expoConfig?.ios?.bundleIdentifier ??
     Constants.manifest.ios.bundleIdentifier;
@@ -45,17 +43,16 @@ function setup(options?: SetupOptions): boolean {
       'appGroup and tunnelIdentifier must be provided or set in app.json',
     );
   }
-  return ExpoTunnelkitModule.setup(appGroup, tunnelIdentifier);
+  ExpoTunnelkitModule.setup(appGroup, tunnelIdentifier);
 }
 
 /**
  * Set the VPN credentials
  * @param username
  * @param password
- * @returns `true` if the credentials were set successfully, `false` otherwise
  */
-function setCredentials(username: string, password: string): boolean {
-  return ExpoTunnelkitModule.setCredentials(username, password);
+function setCredentials(username: string, password: string) {
+  ExpoTunnelkitModule.setCredentials(username, password);
 }
 
 /**
@@ -67,7 +64,6 @@ function setCredentials(username: string, password: string): boolean {
  * @param key a parameter to be set
  * @param value a value to be set
  * @see SessionBuilder for the list of available parameters
- * @returns `true` if the parameter was set successfully, `false` otherwise
  * @example await setParam('Hostname', 'example.com');
  * @example await setParam('Port', 443);
  * @example await setParam('SocketType', 'TCP');
@@ -75,12 +71,15 @@ function setCredentials(username: string, password: string): boolean {
 function setParam<T extends keyof SessionBuilder>(
   key: T,
   value: SessionBuilder[T],
-): boolean {
+) {
   const v =
     typeof value === 'object' || typeof value === 'boolean'
       ? JSON.stringify(value)
       : value;
-  return ExpoTunnelkitModule.setParam(key, v);
+
+  if (!ExpoTunnelkitModule.setParam(key, v)) {
+    throw new Error(`Unknown parameter: ${key}`);
+  }
 }
 
 /**
@@ -88,14 +87,10 @@ function setParam<T extends keyof SessionBuilder>(
  * You can modify set parameters using `setParam` method after importing the configuration.
  * @param url URL of the configuration file
  * @param passphrase The optional passphrase for encrypted data.
- * @returns Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise
  * @deprecated Not tested properly. Use `configFromString` instead.
  */
-async function configFromUrl(
-  url: string,
-  passphrase?: string,
-): Promise<boolean> {
-  return ExpoTunnelkitModule.configFromUrl(url, passphrase);
+async function configFromUrl(url: string, passphrase?: string) {
+  await ExpoTunnelkitModule.configFromUrl(url, passphrase);
 }
 
 /**
@@ -103,13 +98,9 @@ async function configFromUrl(
  * You can modify set parameters using `setParam` method after importing the configuration.
  * @param config configuration string
  * @param passphrase The optional passphrase for encrypted data.
- * @returns Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise
  */
-async function configFromString(
-  config: string,
-  passphrase?: string,
-): Promise<boolean> {
-  return ExpoTunnelkitModule.configFromString(config, passphrase);
+async function configFromString(config: string, passphrase?: string) {
+  await ExpoTunnelkitModule.configFromString(config, passphrase);
 }
 
 /**
@@ -125,20 +116,20 @@ async function getConnectionStatus() {
 
 /**
  * Connect to the VPN server. Sessin parameters must be set before calling this method.
- * @returns Promise that resolves to `true` if the connection was successful, rejects with an error otherwise
+ * @returns Promise that resolves when the connection was successful, rejects with an error otherwise
  * @example const connected = await connect();
  */
-async function connect(): Promise<boolean> {
-  return ExpoTunnelkitModule.connect();
+async function connect() {
+  await ExpoTunnelkitModule.connect();
 }
 
 /**
  * Disconnect from the VPN server.
- * @returns Promise that resolves to `true` if the disconnection was successful, rejects with an error otherwise
+ * @returns Promise that resolves when the disconnection was successful, rejects with an error otherwise
  * @example const disconnected = await disconnect();
  */
-async function disconnect(): Promise<boolean> {
-  return ExpoTunnelkitModule.disconnect();
+async function disconnect() {
+  await ExpoTunnelkitModule.disconnect();
 }
 
 /**
