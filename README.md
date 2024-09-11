@@ -88,7 +88,7 @@ subscription.remove();
 ### `ExpoTunnelkit.setup`
 
 ```typescript
-function setup(options?: SetupOptions): boolean;
+function setup(options?: SetupOptions): void;
 
 type SetupOptions = {
   appGroup?: string; // Group identifier shared between the app and the app extension.
@@ -98,17 +98,17 @@ type SetupOptions = {
 
 Setup VPN module with appGroup and tunnelIdentifier. This method should be called before any other VPN module methods. If options are not provided, the appGroup and tunnelIdentifier will be set to the default values based on the app's bundle identifier set in app.json (In most cases you don't need to provide any options).
 
-**Returns** `true` if the VPN module was set up successfully, `false` otherwise.
+**Returns** void.
 
 ### `ExpoTunnelkit.setCredentials`
 
 ```typescript
-function setCredentials(username: string, password: string): boolean;
+function setCredentials(username: string, password: string): void;
 ```
 
 Set the VPN credentials.
 
-**Returns** `true` if the credentials were set successfully, `false` otherwise.
+**Returns** void.
 
 ### `ExpoTunnelkit.setParam`
 
@@ -116,12 +116,12 @@ Set the VPN credentials.
 function setParam<T extends keyof SessionBuilder>(
   key: T, // a parameter to be set
   value: SessionBuilder[T], // a value to be set
-): boolean;
+): void;
 ```
 
 Set VPN connection parameter. The parameters must be set before the VPN connection is established. You can set parameters manually or use `configFromUrl`/`configFromString` to set them from a configuration file. Parameters set manually after importing configuration from a file will override the parameters set from the file. See `SessionBuilder` for the list of available parameters.
 
-**Returns** `true` if the parameter was set successfully, `false` otherwise.
+**Returns** void.
 
 ### `ExpoTunnelkit.configFromUrl`
 
@@ -129,12 +129,12 @@ Set VPN connection parameter. The parameters must be set before the VPN connecti
 async function configFromUrl(
   url: string, // URL of the configuration file
   passphrase?: string, // The optional passphrase for encrypted data.
-): Promise<boolean>;
+): Promise<void>;
 ```
 
 Configure VPN connection from an .ovpn configuration file. You can modify set parameters using `setParam` method after importing the configuration.
 
-**Returns** Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise.
+**Returns** Promise that resolves if the configuration was set successfully, rejects with an error otherwise.
 
 ### `ExpoTunnelkit.configFromString`
 
@@ -142,12 +142,12 @@ Configure VPN connection from an .ovpn configuration file. You can modify set pa
 async function configFromString(
   config: string, // configuration string (.ovpn file content)
   passphrase?: string, // The optional passphrase for encrypted data.
-): Promise<boolean>;
+): Promise<void>;
 ```
 
 Configure VPN connection from a configuration string (.ovpn file content). You can modify set parameters using `setParam` method after importing the configuration.
 
-**Returns** Promise that resolves to `true` if the configuration was set successfully, rejects with an error otherwise.
+**Returns** Promise that resolves if the configuration was set successfully, rejects with an error otherwise.
 
 ### `ExpoTunnelkit.getConnectionStatus`
 
@@ -172,22 +172,26 @@ Get current VPN connection status.
 ### `ExpoTunnelkit.connect`
 
 ```typescript
-async function connect(): Promise<boolean>;
+async function connect(timeout = 7000): Promise<void>;
 ```
 
 Connect to the VPN server. Sessin parameters must be set before calling this method.
 
-**Returns** Promise that resolves to `true` if the connection was successful, rejects with an error otherwise.
+**Parameters** `timeout` - connection timeout in milliseconds.
+
+**Returns** Promise that resolves if the connection was successful, rejects with an error otherwise.
 
 ### `ExpoTunnelkit.disconnect`
 
 ```typescript
-async function disconnect(): Promise<boolean>;
+async function disconnect(timeout = 7000): Promise<void>;
 ```
 
 Disconnect from the VPN server.
 
-**Returns** Promise that resolves to `true` if the disconnection was successful, rejects with an error otherwise.
+**Parameters** `timeout` - disconnection timeout in milliseconds.
+
+**Returns** Promise that resolves if the disconnection was successful, rejects with an error otherwise.
 
 ### `ExpoTunnelkit.addVpnStatusListener`
 
