@@ -30,7 +30,7 @@ type SetupOptions = {
  *  tunnelIdentifier: 'com.example.app.tunnelExtension',
  * });
  */
-function setup(options?: SetupOptions) {
+function setup(options?: SetupOptions): void {
   const bundle =
     Constants.expoConfig?.ios?.bundleIdentifier ??
     Constants.manifest.ios.bundleIdentifier;
@@ -51,7 +51,7 @@ function setup(options?: SetupOptions) {
  * @param username
  * @param password
  */
-function setCredentials(username: string, password: string) {
+function setCredentials(username: string, password: string): void {
   ExpoTunnelkitModule.setCredentials(username, password);
 }
 
@@ -71,7 +71,7 @@ function setCredentials(username: string, password: string) {
 function setParam<T extends keyof SessionBuilder>(
   key: T,
   value: SessionBuilder[T],
-) {
+): void {
   const v =
     typeof value === 'object' || typeof value === 'boolean'
       ? JSON.stringify(value)
@@ -89,7 +89,7 @@ function setParam<T extends keyof SessionBuilder>(
  * @param passphrase The optional passphrase for encrypted data.
  * @deprecated Not tested properly. Use `configFromString` instead.
  */
-async function configFromUrl(url: string, passphrase?: string) {
+async function configFromUrl(url: string, passphrase?: string): Promise<void> {
   await ExpoTunnelkitModule.configFromUrl(url, passphrase);
 }
 
@@ -99,7 +99,10 @@ async function configFromUrl(url: string, passphrase?: string) {
  * @param config configuration string
  * @param passphrase The optional passphrase for encrypted data.
  */
-async function configFromString(config: string, passphrase?: string) {
+async function configFromString(
+  config: string,
+  passphrase?: string,
+): Promise<void> {
   await ExpoTunnelkitModule.configFromString(config, passphrase);
 }
 
@@ -117,10 +120,10 @@ async function getConnectionStatus() {
 /**
  * Connect to the VPN server. Sessin parameters must be set before calling this method.
  * @param timeout a timeout of the connection in milliseconds
- * @returns Promise that resolves when the connection was successful, rejects with an error otherwise
+ * @returns Promise that resolves if the connection was successful, rejects with an error otherwise
  * @example const connected = await connect();
  */
-async function connect(timeout = 7000) {
+async function connect(timeout = 7000): Promise<void> {
   try {
     await ExpoTunnelkitModule.connect();
 
@@ -147,10 +150,10 @@ async function connect(timeout = 7000) {
 /**
  * Disconnect from the VPN server.
  * @param timeout a timeout of the disconnection in milliseconds
- * @returns Promise that resolves when the disconnection was successful, rejects with an error otherwise
+ * @returns Promise that resolves if the disconnection was successful, rejects with an error otherwise
  * @example const disconnected = await disconnect();
  */
-async function disconnect(timeout = 7000) {
+async function disconnect(timeout = 7000): Promise<void> {
   await ExpoTunnelkitModule.disconnect();
 
   await Promise.race([
