@@ -116,20 +116,56 @@ async function getConnectionStatus() {
 
 /**
  * Connect to the VPN server. Sessin parameters must be set before calling this method.
+ * @param timeout a timeout of the connection in milliseconds
  * @returns Promise that resolves when the connection was successful, rejects with an error otherwise
  * @example const connected = await connect();
  */
-async function connect() {
-  await ExpoTunnelkitModule.connect();
+async function connect(timeout = 7000) {
+  try {
+    await ExpoTunnelkitModule.connect();
+
+    await Promise.race([
+      new Promise((reject) =>
+        setTimeout(() => reject(new Error('Connection timed out')), timeout),
+      ),
+      new Promise<void>((resolve) => {
+        const listener = addVpnStatusListener((state) => {
+          if (state.VPNStatus === 'Connected') {
+            listener.remove();
+            resolve();
+          }
+        });
+      }),
+    ]);
+  } catch (e) {
+    // disconnect in case of error and if some connection process is still running
+    disconnect().catch(() => {});
+    throw e;
+  }
 }
 
 /**
  * Disconnect from the VPN server.
+ * @param timeout a timeout of the disconnection in milliseconds
  * @returns Promise that resolves when the disconnection was successful, rejects with an error otherwise
  * @example const disconnected = await disconnect();
  */
-async function disconnect() {
+async function disconnect(timeout = 7000) {
   await ExpoTunnelkitModule.disconnect();
+
+  await Promise.race([
+    new Promise((reject) =>
+      setTimeout(() => reject(new Error('Disconnection timed out')), timeout),
+    ),
+    new Promise<void>((resolve) => {
+      const listener = addVpnStatusListener((state) => {
+        if (state.VPNStatus === 'Disconnected') {
+          listener.remove();
+          resolve();
+        }
+      });
+    }),
+  ]);
 }
 
 /**
