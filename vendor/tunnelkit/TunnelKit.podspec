@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = "11.0"
     s.osx.deployment_target = "10.11"
 
-    s.default_subspecs = "Protocols/OpenVPN"
+    s.default_subspecs = ["Protocols/OpenVPN", "Extra/LZO"]
 
     s.subspec "Core" do |p|
         p.source_files          = "TunnelKit/Sources/Core/**/*.{h,m,swift}"
