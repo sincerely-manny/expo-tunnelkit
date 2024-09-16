@@ -40,6 +40,8 @@ extension NEVPNStatus {
 public class ExpoTunnelkitModule: Module {
   private var status = NEVPNStatus.invalid
   private var currentManager: NETunnelProviderManager?
+  private var connectPromise: Promise?
+  private var disconnectPromise: Promise?
 
   private var dataCountInterval: Int = 1000
 
@@ -235,15 +237,30 @@ public class ExpoTunnelkitModule: Module {
       if let appGroup = self.appGroup {
         let sharedDefaults = UserDefaults(suiteName: appGroup)
       }
-    }
-
-    if vpnStatus == .disconnected {
+      // Resolve the connect promise when connected
+      self.connectPromise?.resolve(true)
+      self.connectPromise = nil
+    } else if vpnStatus == .disconnected || vpnStatus == .invalid {
       if let appGroup = self.appGroup {
         let sharedDefaults = UserDefaults(suiteName: appGroup)
         if let errorMessage = sharedDefaults?.string(forKey: "TunnelKitLastError") {
           eventData["Error"] = errorMessage
         }
       }
+      // Resolve or reject the disconnect promise when disconnected
+      if vpnStatus == .disconnected {
+        self.disconnectPromise?.resolve(true)
+      } else {
+        self.disconnectPromise?.reject(
+          Exception(name: "VPNError", description: "VPN failed to disconnect"))
+      }
+      self.disconnectPromise = nil
+
+      // Reject the connect promise if disconnected or invalid
+      self.connectPromise?.reject(
+        Exception(
+          name: "VPNError", description: eventData["Error"] ?? "VPN failed to connect"))
+      self.connectPromise = nil
     }
 
     sendEvent("VPNStatusDidChange", eventData)
@@ -620,8 +637,7 @@ public class ExpoTunnelkitModule: Module {
         promise.reject(
           Exception(
             name: "ExpoTunnelkitModuleError",
-            description:
-              "Missing required VPN parameters (username, password, or hostname)."
+            description: "Missing required VPN parameters (username, password, or hostname)."
           ))
         return
       }
@@ -661,7 +677,8 @@ public class ExpoTunnelkitModule: Module {
               }
               do {
                 try session.startTunnel()
-                promise.resolve(true)
+                // Store the promise to resolve later based on VPN status
+                self.connectPromise = promise
               } catch let e {
                 print("error starting tunnel: \(e)")
                 promise.reject(
@@ -671,27 +688,25 @@ public class ExpoTunnelkitModule: Module {
                   ))
               }
             })
-
         case .connected, .connecting:
           self.disconnect()
-
         default:
           break
         }
       }
 
       if status == .invalid {
-        reloadCurrentManager({ (error) in
+        reloadCurrentManager { (error) in
           block()
-        })
+        }
       } else {
         block()
       }
     }
 
     AsyncFunction("disconnect") { (promise: Promise) in
+      self.disconnectPromise = promise
       self.disconnect()
-      promise.resolve(true)
     }
 
     AsyncFunction("getCurrentConfig") { (promise: Promise) in
