@@ -182,12 +182,10 @@ Connect to the VPN server. Session parameters must be set before calling this me
 ### `ExpoTunnelkit.disconnect`
 
 ```typescript
-async function disconnect(timeout = 7000): Promise<void>;
+async function disconnect(): Promise<void>;
 ```
 
 Disconnect from the VPN server.
-
-**Parameters** `timeout` - disconnection timeout in milliseconds.
 
 **Returns** Promise that resolves if the disconnection was successful, rejects with an error otherwise.
 
