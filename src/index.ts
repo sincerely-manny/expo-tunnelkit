@@ -123,7 +123,7 @@ async function getConnectionStatus() {
  * Connect to the VPN server. Sessin parameters must be set before calling this method.
  * @returns Promise that resolves if the connection was successful, rejects with an error otherwise.
  *
- * Keep in mind that resolved promise does notalways mean that the connection was successful because the connection status can change after the promise is resolved
+ * Keep in mind that resolved promise does not always mean that the connection was successful because the connection status can change after the promise is resolved
  * (e.g. connection was established and then immediately dropped by server or client). Use `addVpnStatusListener` to get the current connection status.
  * @example const connected = await connect();
  */
