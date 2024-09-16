@@ -1,3 +1,4 @@
+import CFNetwork
 import ExpoModulesCore
 import Foundation
 import NetworkExtension
@@ -99,7 +100,7 @@ public class ExpoTunnelkitModule: Module {
 
     builder.prefersResolvedAddresses = self.tunnelProviderSettings.prefersResolvedAddresses ?? false
     builder.resolvedAddresses = self.tunnelProviderSettings.resolvedAddresses
-    builder.mtu = self.tunnelProviderSettings.mtu ?? 1250
+    builder.mtu = self.tunnelProviderSettings.mtu ?? 1350
     builder.shouldDebug = self.tunnelProviderSettings.shouldDebug ?? false
     builder.debugLogFormat = self.tunnelProviderSettings.debugLogFormat
     builder.masksPrivateData = self.tunnelProviderSettings.masksPrivateData
@@ -227,7 +228,25 @@ public class ExpoTunnelkitModule: Module {
     }
     self.status = vpnStatus
     let statusDescription = vpnStatus.readableStatus.rawValue
-    sendEvent("VPNStatusDidChange", ["VPNStatus": statusDescription])
+
+    var eventData = ["VPNStatus": statusDescription]
+
+    if vpnStatus == .connected {
+      if let appGroup = self.appGroup {
+        let sharedDefaults = UserDefaults(suiteName: appGroup)
+      }
+    }
+
+    if vpnStatus == .disconnected {
+      if let appGroup = self.appGroup {
+        let sharedDefaults = UserDefaults(suiteName: appGroup)
+        if let errorMessage = sharedDefaults?.string(forKey: "TunnelKitLastError") {
+          eventData["Error"] = errorMessage
+        }
+      }
+    }
+
+    sendEvent("VPNStatusDidChange", eventData)
     print("VPNStatusDidChange: \(statusDescription)")
   }
 
@@ -249,13 +268,22 @@ public class ExpoTunnelkitModule: Module {
     Name("ExpoTunnelkit")
     Events("VPNStatusDidChange")
 
+    OnCreate {
+      NotificationCenter.default.addObserver(
+        self,
+        selector: #selector(VPNStatusDidChange(notification:)),
+        name: .NEVPNStatusDidChange,
+        object: nil
+      )
+    }
+
+    OnDestroy {
+      NotificationCenter.default.removeObserver(self)
+    }
+
     Function("setup") { (appGroup: String, tunnelIdentifier: String) in
       self.appGroup = appGroup
       self.tunnelIdentifier = tunnelIdentifier
-
-      NotificationCenter.default.addObserver(
-        self, selector: #selector(VPNStatusDidChange(notification:)),
-        name: .NEVPNStatusDidChange, object: nil)
 
       return true
     }
@@ -728,6 +756,39 @@ public class ExpoTunnelkitModule: Module {
         "interval": self.dataCountInterval,
       ]
       promise.resolve(response)
+    }
+
+    AsyncFunction("getVpnLogs") { (promise: Promise) in
+      guard let appGroup = self.appGroup else {
+        promise.reject(
+          Exception(
+            name: "ExpoTunnelkitModuleError",
+            description: "App Group not set."
+          ))
+        return
+      }
+      guard
+        let sharedContainerURL = FileManager.default.containerURL(
+          forSecurityApplicationGroupIdentifier: appGroup)
+      else {
+        promise.reject(
+          Exception(
+            name: "ExpoTunnelkitModuleError",
+            description: "Unable to access shared container."
+          ))
+        return
+      }
+      let logFileURL = sharedContainerURL.appendingPathComponent("debug.log")
+      do {
+        let logContent = try String(contentsOf: logFileURL, encoding: .utf8)
+        promise.resolve(logContent)
+      } catch {
+        promise.reject(
+          Exception(
+            name: "ExpoTunnelkitModuleError",
+            description: "Error reading log file: \(error)"
+          ))
+      }
     }
   }
 
