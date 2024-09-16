@@ -75,6 +75,12 @@ export type SessionBuilder = {
   ProxyAutoConfigurationURL: string;
   ProxyBypassDomains: string[];
   RoutingPolicies: RoutingPolicy[];
+  PrefersResolvedAddresses: boolean;
+  ResolvedAddresses: string[];
+  MTU: number;
+  Debug: boolean;
+  DebugLogFormat: string;
+  MasksPrivateData: boolean;
   DataCountInterval: number; // milliseconds between data count updates (0 to disable, default 1000)
 };
 
