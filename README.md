@@ -172,12 +172,10 @@ Get current VPN connection status.
 ### `ExpoTunnelkit.connect`
 
 ```typescript
-async function connect(timeout = 7000): Promise<void>;
+async function connect(): Promise<void>;
 ```
 
-Connect to the VPN server. Sessin parameters must be set before calling this method.
-
-**Parameters** `timeout` - connection timeout in milliseconds.
+Connect to the VPN server. Session parameters must be set before calling this method. Keep in mind that resolved promise does not always mean that the connection was successful because the connection status can change after the promise is resolved (e.g. connection was established and then immediately dropped by server or client). Use `addVpnStatusListener` to get the current connection status.
 
 **Returns** Promise that resolves if the connection was successful, rejects with an error otherwise.
 
@@ -197,7 +195,10 @@ Disconnect from the VPN server.
 
 ```typescript
 function addVpnStatusListener(
-  listener: (state: { VPNStatus: VpnStatus }) => void,
+  listener: (state: {
+    VPNStatus: VpnStatus;
+    Error?: VpnError[keyof VpnError];
+  }) => void,
 ): Subscription;
 
 type Subscription = {
@@ -213,6 +214,29 @@ type VpnStatus =
   | 'Disconnecting'
   | 'None'
   | 'Unknown';
+
+const ExpoTunnelkitError = {
+  dnsFailure: 'Socket endpoint could not be resolved.',
+  exhaustedProtocols: 'No more protocols available to try.',
+  socketActivity: 'Socket failed to reach active state.',
+  authentication: 'Credentials authentication failed.',
+  tlsInitialization:
+    'TLS could not be initialized (e.g. malformed CA or client PEMs).',
+  tlsServerVerification: 'TLS server verification failed.',
+  tlsHandshake: 'TLS handshake failed.',
+  encryptionInitialization:
+    'The encryption logic could not be initialized (e.g. PRNG, algorithms).',
+  encryptionData: 'Data encryption/decryption failed.',
+  lzo: 'The LZO engine failed.',
+  serverCompression: 'Server uses an unsupported compression algorithm.',
+  timeout: 'Tunnel timed out.',
+  linkError: 'An error occurred at the link level.',
+  routing: 'Network routing information is missing or incomplete.',
+  networkChanged:
+    'The current network changed (e.g. switched from WiFi to data connection).',
+  gatewayUnattainable: 'Default gateway could not be attained.',
+  unexpectedReply: 'The server replied in an unexpected way.',
+} as const;
 ```
 
 Add a listener to VPN status changes.
@@ -250,6 +274,20 @@ ExpoTunnelkit.setParam('DataCountInterval', 1000);
 ```
 
 **Returns** Promise that resolves to the `VpnDataCount` object.
+
+### `ExpoTunnelkit.getVpnLogs`
+
+```typescript
+async function getVpnLogs(): Promise<string>;
+```
+
+Get the last VPN logs. To start collecting logs, you need to set the `Debug` parameter to `true`.
+
+```typescript
+setParam('Debug', true);
+```
+
+**Returns** Promise that resolves to the last VPN logs.
 
 ## Types
 
@@ -292,7 +330,13 @@ type SessionBuilder = {
   ProxyAutoConfigurationURL: string;
   ProxyBypassDomains: string[];
   RoutingPolicies: RoutingPolicy[];
-  DataCountInterval: number;
+  PrefersResolvedAddresses: boolean;
+  ResolvedAddresses: string[];
+  MTU: number;
+  Debug: boolean;
+  DebugLogFormat: string;
+  MasksPrivateData: boolean;
+  DataCountInterval: number; // milliseconds between data count updates (0 to disable, default 1000)
 };
 ```
 
