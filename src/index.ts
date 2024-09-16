@@ -1,8 +1,10 @@
 import Constants from 'expo-constants';
 
+import { ExpoTunnelkitError } from './ExpoTunnelkit.errors';
 import type {
   SessionBuilder,
   VpnDataCount,
+  VpnError,
   VpnStatus,
 } from './ExpoTunnelkit.types';
 import {
@@ -119,56 +121,33 @@ async function getConnectionStatus() {
 
 /**
  * Connect to the VPN server. Sessin parameters must be set before calling this method.
- * @param timeout a timeout of the connection in milliseconds
- * @returns Promise that resolves if the connection was successful, rejects with an error otherwise
+ * @returns Promise that resolves if the connection was successful, rejects with an error otherwise.
+ *
+ * Keep in mind that resolved promise does notalways mean that the connection was successful because the connection status can change after the promise is resolved
+ * (e.g. connection was established and then immediately dropped by server or client). Use `addVpnStatusListener` to get the current connection status.
  * @example const connected = await connect();
  */
-async function connect(timeout = 7000): Promise<void> {
+async function connect(): Promise<void> {
   try {
-    await ExpoTunnelkitModule.connect();
-
-    await Promise.race([
-      new Promise((reject) =>
-        setTimeout(() => reject(new Error('Connection timed out')), timeout),
-      ),
-      new Promise<void>((resolve) => {
-        const listener = addVpnStatusListener((state) => {
-          if (state.VPNStatus === 'Connected') {
-            listener.remove();
-            resolve();
-          }
-        });
-      }),
-    ]);
+    const s = await ExpoTunnelkitModule.connect();
+    return s;
   } catch (e) {
-    // disconnect in case of error and if some connection process is still running
-    disconnect().catch(() => {});
+    if (e instanceof Error) {
+      throw new Error(
+        ExpoTunnelkitError[e.message as keyof VpnError] ?? e.message,
+      );
+    }
     throw e;
   }
 }
 
 /**
  * Disconnect from the VPN server.
- * @param timeout a timeout of the disconnection in milliseconds
  * @returns Promise that resolves if the disconnection was successful, rejects with an error otherwise
  * @example const disconnected = await disconnect();
  */
-async function disconnect(timeout = 7000): Promise<void> {
+async function disconnect(): Promise<void> {
   await ExpoTunnelkitModule.disconnect();
-
-  await Promise.race([
-    new Promise((reject) =>
-      setTimeout(() => reject(new Error('Disconnection timed out')), timeout),
-    ),
-    new Promise<void>((resolve) => {
-      const listener = addVpnStatusListener((state) => {
-        if (state.VPNStatus === 'Disconnected') {
-          listener.remove();
-          resolve();
-        }
-      });
-    }),
-  ]);
 }
 
 /**
@@ -178,7 +157,10 @@ async function disconnect(timeout = 7000): Promise<void> {
  * @example addVpnStatusListener((state) => console.log(state.VPNStatus));
  */
 function addVpnStatusListener(
-  listener: (state: { VPNStatus: VpnStatus }) => void,
+  listener: (state: {
+    VPNStatus: VpnStatus;
+    Error?: VpnError[keyof VpnError];
+  }) => void,
 ) {
   return ExpoTunnelkitEmitter.addListener('VPNStatusDidChange', listener);
 }
@@ -205,6 +187,19 @@ function getCurrentConfig(): Promise<Record<keyof SessionBuilder, string>> {
  */
 function getDataCount(): Promise<VpnDataCount> {
   return ExpoTunnelkitModule.getDataCount();
+}
+
+/**
+ * Get the last VPN logs. To start collecting logs, you need to set the `Debug` parameter to `true`.
+ * @example setParam('Debug', true);
+ * @returns Promise that resolves to the last VPN logs, rejects with an error if the logs are not available
+ * @example const logs = await getVpnLogs();
+ * @example console.log(logs);
+ */
+async function getVpnLogs(): Promise<string> {
+  const allLogs = await ExpoTunnelkitModule.getVpnLogs();
+  const lastLog = allLogs.split(`\n--- EOF ---`).pop();
+  return lastLog ?? '';
 }
 
 /**
@@ -237,8 +232,15 @@ const ExpoTunnelkit = {
   addVpnStatusListener,
   getCurrentConfig,
   getDataCount,
+  getVpnLogs,
 };
 
 export default ExpoTunnelkit;
 
-export type { SessionBuilder, VpnStatus, VpnDataCount };
+export type {
+  SessionBuilder,
+  VpnStatus,
+  VpnDataCount,
+  VpnError,
+  ExpoTunnelkitError as TunnelkitError,
+};

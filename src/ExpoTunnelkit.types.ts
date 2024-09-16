@@ -1,3 +1,5 @@
+import { ExpoTunnelkitError } from './ExpoTunnelkit.errors';
+
 type Cipher =
   | 'AES-128-CBC'
   | 'AES-192-CBC'
@@ -85,6 +87,10 @@ export type VpnStatus =
   | 'Disconnecting'
   | 'None'
   | 'Unknown';
+
+export type VpnError = {
+  [key in keyof typeof ExpoTunnelkitError]: (typeof ExpoTunnelkitError)[key];
+};
 
 export type VpnDataCount = {
   dataIn: number;
