@@ -1,6 +1,6 @@
 import ExpoTunnelkit, { VpnStatus } from 'expo-tunnelkit';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, ScrollView, Text, View } from 'react-native';
 
 import { ovpnConfig } from './ovpn-config';
 
@@ -8,37 +8,54 @@ export default function App() {
   const [status, setStatus] = useState<VpnStatus>('Unknown');
   const [ready, setReady] = useState(false);
   const [dataCount, setDataCount] = useState({ dataIn: 0, dataOut: 0 });
+  const [logs, setLogs] = useState('');
 
   const init = useCallback(async () => {
     ExpoTunnelkit.setup();
-    ExpoTunnelkit.setCredentials('openvpn', 'k3Jbv5Lzbiaz');
+    ExpoTunnelkit.setCredentials('test', 'testtest2');
     await ExpoTunnelkit.configFromString(ovpnConfig);
-    ExpoTunnelkit.setParam('Hostname', '192.168.2.100');
-    ExpoTunnelkit.setParam('UsesPIAPatches', true);
+    ExpoTunnelkit.setParam('Debug', true);
     setReady(true);
   }, []);
 
   useEffect(() => {
     const subscription = ExpoTunnelkit.addVpnStatusListener((status) => {
-      console.log('Current status', status.VPNStatus);
+      console.log('Current status', status);
       setStatus(status.VPNStatus);
     });
     const interval = setInterval(() => {
-      ExpoTunnelkit.getDataCount()
-        .then((data) => {
-          console.log('Data count', data);
-          setDataCount(data);
-        })
-        .catch((error) => {
-          console.log('Error getting data count', error);
-        });
+      ExpoTunnelkit.getDataCount().then((data) => {
+        setDataCount(data);
+      });
     }, 1000);
+
+    setTimeout(() => {
+      ExpoTunnelkit.getVpnLogs().then((logs) => {
+        setLogs(logs);
+      });
+    }, 5000);
 
     init();
     return () => {
       subscription.remove();
       clearInterval(interval);
     };
+  }, []);
+
+  const handleConnect = useCallback(() => {
+    ExpoTunnelkit.connect()
+      .then((status) => {
+        console.log('Connect status (promise)', status);
+      })
+      .catch((error) => {
+        console.log('Connect error (promise)', error);
+      })
+      .finally(() => {
+        ExpoTunnelkit.getVpnLogs().then((logs) => {
+          console.log('Logs', logs);
+          setLogs(logs);
+        });
+      });
   }, []);
 
   return (
@@ -53,15 +70,11 @@ export default function App() {
           justifyContent: 'center',
         }}
       >
-        <Button
-          title="🌍 Connect"
-          onPress={ExpoTunnelkit.connect}
-          disabled={!ready}
-        />
+        <Button title="🌍 Connect" onPress={handleConnect} disabled={!ready} />
         <View style={{ width: 1, backgroundColor: 'black' }} />
         <Button
           title="❌ Disconnect"
-          onPress={ExpoTunnelkit.disconnect}
+          onPress={() => ExpoTunnelkit.disconnect()}
           disabled={!ready}
         />
       </View>
@@ -79,6 +92,10 @@ export default function App() {
           {(dataCount.dataOut / 1e6).toFixed(2)} MB
         </Text>
       </View>
+      <ScrollView>
+        <Text style={{ fontSize: 20, fontWeight: 700 }}>Logs:</Text>
+        <Text>{logs.split(`\n`).toReversed()}</Text>
+      </ScrollView>
     </View>
   );
 }
