@@ -640,7 +640,7 @@ public class ExpoTunnelkitModule: Module {
         }
 
         let manager = self.currentManager
-          promise.resolve(manager?.connection.status.rawValue ?? "Invalid")
+          promise.resolve(manager?.connection.status.readableStatus.rawValue ?? "Invalid")
       }
     }
 
