@@ -627,7 +627,21 @@ public class ExpoTunnelkitModule: Module {
     }
 
     AsyncFunction("getVpnStatus") { (promise: Promise) in
-      promise.resolve(self.currentManager?.connection.status.rawValue ?? "Invaild")
+      //promise.resolve(self.currentManager?.connection.status.rawValue ?? "Invaild")
+      reloadCurrentManager { (error) in
+        if let error = error {
+          print("error reloading preferences: \(error)")
+          promise.reject(
+            Exception(
+              name: "ExpoTunnelkitModuleError",
+              description: "Error getting VPN status: \(error)"
+            ))
+          return
+        }
+
+        let manager = self.currentManager
+          promise.resolve(manager?.connection.status.rawValue ?? "Invalid")
+      }
     }
 
     AsyncFunction("connect") { (promise: Promise) in
@@ -689,6 +703,11 @@ public class ExpoTunnelkitModule: Module {
               }
             })
         case .connected, .connecting:
+          promise.reject(
+            Exception(
+              name: "ExpoTunnelkitModuleError",
+              description: "Already connected or connecting"
+          ))
           self.disconnect()
         default:
           break
