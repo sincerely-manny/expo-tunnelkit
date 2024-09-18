@@ -627,7 +627,7 @@ public class ExpoTunnelkitModule: Module {
     }
 
     AsyncFunction("getVpnStatus") { (promise: Promise) in
-      promise.resolve(self.status.readableStatus.rawValue)
+      promise.resolve(self.currentManager?.connection.status.rawValue ?? "Invaild")
     }
 
     AsyncFunction("connect") { (promise: Promise) in

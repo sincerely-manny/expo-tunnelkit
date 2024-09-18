@@ -203,6 +203,15 @@ async function getVpnLogs(): Promise<string> {
 }
 
 /**
+ * Get the current VPN connection status.
+ * @returns Promise that resolves to the current `VpnStatus`
+ * @example const status = await getVpnStatus();
+ */
+function getVpnStatus(): Promise<VpnStatus> {
+  return ExpoTunnelkitModule.getVpnStatus();
+}
+
+/**
  * VPN module methods wrapper.
  * @example // Setup app group and tunnel identifier
  * ExpoTunnelkit.setup('group.com.example.app.tunnel', 'com.example.app.tunnelExtension');
@@ -233,14 +242,16 @@ const ExpoTunnelkit = {
   getCurrentConfig,
   getDataCount,
   getVpnLogs,
+  getVpnStatus,
 };
 
 export default ExpoTunnelkit;
 
 export type {
   SessionBuilder,
-  VpnStatus,
+  ExpoTunnelkitError as TunnelkitError,
   VpnDataCount,
   VpnError,
-  ExpoTunnelkitError as TunnelkitError,
+  VpnStatus,
 };
+
