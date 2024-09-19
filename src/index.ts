@@ -211,9 +211,7 @@ function addVpnThroughputListener(
     interval: 0,
   };
   const update = async () => {
-    const dataCount = await ExpoTunnelkit.getDataCount().catch(() => {
-      return lastTickDataCount;
-    });
+    const dataCount = await getDataCount().catch(() => lastTickDataCount);
     const now = Date.now();
     const { interval, dataIn, dataOut } = dataCount;
     const intervalSeconds = interval / 1000;

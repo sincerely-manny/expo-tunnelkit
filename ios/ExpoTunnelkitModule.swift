@@ -153,6 +153,11 @@ public class ExpoTunnelkitModule: Module {
   }
 
   private func reloadCurrentManager(_ completionHandler: ((Error?) -> Void)?) {
+    if let manager = self.currentManager {
+      completionHandler?(nil)  // Manager is already loaded, no need to reload
+      return
+    }
+
     NETunnelProviderManager.loadAllFromPreferences { (managers, error) in
       if let error = error {
         completionHandler?(error)
@@ -161,11 +166,10 @@ public class ExpoTunnelkitModule: Module {
 
       var manager: NETunnelProviderManager?
 
-      for m in managers! {
+      for m in managers ?? [] {
         if let p = m.protocolConfiguration as? NETunnelProviderProtocol {
           if let tunnelIdentifier = self.tunnelIdentifier,
-            p.providerBundleIdentifier == tunnelIdentifier
-          {
+             p.providerBundleIdentifier == tunnelIdentifier {
             manager = m
             break
           }
@@ -286,6 +290,7 @@ public class ExpoTunnelkitModule: Module {
     Events("VPNStatusDidChange")
 
     OnCreate {
+      NotificationCenter.default.removeObserver(self, name: .NEVPNStatusDidChange, object: nil)
       NotificationCenter.default.addObserver(
         self,
         selector: #selector(VPNStatusDidChange(notification:)),
@@ -295,7 +300,7 @@ public class ExpoTunnelkitModule: Module {
     }
 
     OnDestroy {
-      NotificationCenter.default.removeObserver(self)
+      NotificationCenter.default.removeObserver(self, name: .NEVPNStatusDidChange, object: nil)
     }
 
     Function("setup") { (appGroup: String, tunnelIdentifier: String) in
