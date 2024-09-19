@@ -229,7 +229,7 @@ function addVpnThroughputListener(
     return throughput;
   };
 
-  let sub: NodeJS.Timeout | null = null;
+  let sub: ReturnType<typeof setInterval> | null = null;
   update().then((t) => {
     sub = setInterval(async () => {
       listener(await update());
@@ -315,6 +315,6 @@ export type {
   VpnDataCount,
   VpnError,
   VpnStatus,
-  VpnThroughput,
+  VpnThroughput
 };
 
