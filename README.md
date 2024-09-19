@@ -287,6 +287,28 @@ setParam('Debug', true);
 
 **Returns** Promise that resolves to the last VPN logs.
 
+### `ExpoTunnelkit.addVpnThroughputListener`
+
+```typescript
+function addVpnThroughputListener(
+  listener: (throughput: VpnThroughput) => void,
+): Subscription;
+
+type VpnThroughput = {
+  throughputIn: number;
+  throughputOut: number;
+  interval: number;
+};
+
+type Subscription = {
+  remove: () => void;
+};
+```
+Get the current VPN connection throughput that is being updated in sync with the data count.
+
+
+**Returns** `Subscription` object that can be used to unsubscribe the listener.
+
 ## Types
 
 ### `SessionBuilder`
@@ -358,6 +380,16 @@ type VpnStatus =
 type VpnDataCount = {
   dataIn: number;
   dataOut: number;
+  interval: number;
+};
+```
+
+### `VpnThroughput`
+
+```typescript
+type VpnThroughput = {
+  throughputIn: number;
+  throughputOut: number;
   interval: number;
 };
 ```

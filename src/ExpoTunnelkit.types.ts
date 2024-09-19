@@ -103,3 +103,9 @@ export type VpnDataCount = {
   dataOut: number;
   interval: number;
 };
+
+export type VpnThroughput = {
+  throughputIn: number;
+  throughputOut: number;
+  interval: number;
+};

@@ -6,6 +6,7 @@ import type {
   VpnDataCount,
   VpnError,
   VpnStatus,
+  VpnThroughput,
 } from './ExpoTunnelkit.types';
 import {
   ExpoTunnelkitEmitter,
@@ -189,6 +190,66 @@ function getDataCount(): Promise<VpnDataCount> {
   return ExpoTunnelkitModule.getDataCount();
 }
 
+/*
+ * Get the current VPN connection throughput that is being updated in sync with the data count.
+ * @param listener a function that will be called when the VPN throughput changes
+ * @returns `Subscription` object that can be used to unsubscribe the listener
+ * @example addVpnThroughputListener((throughput) => console.log(throughput));
+ */
+function addVpnThroughputListener(
+  listener: (throughput: VpnThroughput) => void,
+) {
+  const lastTickDataCount = {
+    dataIn: 0,
+    dataOut: 0,
+    interval: 0,
+    timwstamp: Date.now(),
+  };
+  const throughput = {
+    throughputIn: 0,
+    throughputOut: 0,
+    interval: 0,
+  };
+  const update = async () => {
+    const dataCount = await ExpoTunnelkit.getDataCount().catch(() => {
+      return lastTickDataCount;
+    });
+    const now = Date.now();
+    const { interval, dataIn, dataOut } = dataCount;
+    const intervalSeconds = interval / 1000;
+    throughput.throughputIn =
+      (dataIn - lastTickDataCount.dataIn) / intervalSeconds;
+    throughput.throughputOut =
+      (dataOut - lastTickDataCount.dataOut) / intervalSeconds;
+    throughput.interval = interval;
+    lastTickDataCount.dataIn = dataIn;
+    lastTickDataCount.dataOut = dataOut;
+    lastTickDataCount.interval = interval;
+    lastTickDataCount.timwstamp = now;
+    return throughput;
+  };
+
+  let sub: NodeJS.Timeout | null = null;
+  update().then((t) => {
+    sub = setInterval(async () => {
+      listener(await update());
+    }, t.interval);
+  });
+  return {
+    remove: () => {
+      if (sub) {
+        clearInterval(sub);
+      } else {
+        setTimeout(() => {
+          if (sub) {
+            clearInterval(sub);
+          }
+        }, 5000);
+      }
+    },
+  };
+}
+
 /**
  * Get the last VPN logs. To start collecting logs, you need to set the `Debug` parameter to `true`.
  * @example setParam('Debug', true);
@@ -243,6 +304,7 @@ const ExpoTunnelkit = {
   getDataCount,
   getVpnLogs,
   getVpnStatus,
+  addVpnThroughputListener,
 };
 
 export default ExpoTunnelkit;
@@ -253,5 +315,6 @@ export type {
   VpnDataCount,
   VpnError,
   VpnStatus,
+  VpnThroughput,
 };
 
