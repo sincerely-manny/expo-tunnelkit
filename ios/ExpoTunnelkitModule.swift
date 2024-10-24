@@ -147,7 +147,13 @@ public class ExpoTunnelkitModule: Module {
           return
         }
         print("saved preferences")
-        self.reloadCurrentManager(completionHandler)
+        self.reloadCurrentManager { (reloadError) in
+          if let reloadError = reloadError {
+            completionHandler(reloadError)
+          } else {
+            completionHandler(nil)
+          }
+        }
       }
     }
   }
@@ -169,7 +175,8 @@ public class ExpoTunnelkitModule: Module {
       for m in managers ?? [] {
         if let p = m.protocolConfiguration as? NETunnelProviderProtocol {
           if let tunnelIdentifier = self.tunnelIdentifier,
-             p.providerBundleIdentifier == tunnelIdentifier {
+            p.providerBundleIdentifier == tunnelIdentifier
+          {
             manager = m
             break
           }
@@ -183,6 +190,49 @@ public class ExpoTunnelkitModule: Module {
       self.currentManager = manager
       self.status = manager!.connection.status
       completionHandler?(nil)
+    }
+  }
+
+  private func resetManagerAndReload(_ completionHandler: ((Error?) -> Void)?) {
+    // Reset the current manager to forcefully reload
+    self.currentManager = nil
+
+    NETunnelProviderManager.loadAllFromPreferences { (managers, error) in
+      if let error = error {
+        completionHandler?(error)
+        return
+      }
+
+      var manager: NETunnelProviderManager?
+
+      for m in managers ?? [] {
+        if let p = m.protocolConfiguration as? NETunnelProviderProtocol {
+          if let tunnelIdentifier = self.tunnelIdentifier,
+            p.providerBundleIdentifier == tunnelIdentifier
+          {
+            manager = m
+            break
+          }
+        }
+      }
+
+      // If manager is nil, create a new one
+      if manager == nil {
+        manager = NETunnelProviderManager()
+      }
+
+      // Assign the reloaded or new manager to currentManager
+      self.currentManager = manager
+      self.status = manager!.connection.status
+
+      // Explicitly load the manager from preferences to ensure it's fresh
+      manager?.loadFromPreferences(completionHandler: { (error) in
+        if let error = error {
+          completionHandler?(error)
+        } else {
+          completionHandler?(nil)
+        }
+      })
     }
   }
 
@@ -645,7 +695,7 @@ public class ExpoTunnelkitModule: Module {
         }
 
         let manager = self.currentManager
-          promise.resolve(manager?.connection.status.readableStatus.rawValue ?? "Invalid")
+        promise.resolve(manager?.connection.status.readableStatus.rawValue ?? "Invalid")
       }
     }
 
@@ -712,7 +762,7 @@ public class ExpoTunnelkitModule: Module {
             Exception(
               name: "ExpoTunnelkitModuleError",
               description: "Already connected or connecting"
-          ))
+            ))
           self.disconnect()
         default:
           break
@@ -720,7 +770,7 @@ public class ExpoTunnelkitModule: Module {
       }
 
       if status == .invalid {
-        reloadCurrentManager { (error) in
+        resetManagerAndReload { (error) in
           block()
         }
       } else {
