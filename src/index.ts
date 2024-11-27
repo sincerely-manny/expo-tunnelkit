@@ -303,6 +303,7 @@ const ExpoTunnelkit = {
   getVpnLogs,
   getVpnStatus,
   addVpnThroughputListener,
+  eventEmitter: ExpoTunnelkitEmitter,
 };
 
 export default ExpoTunnelkit;
@@ -313,6 +314,5 @@ export type {
   VpnDataCount,
   VpnError,
   VpnStatus,
-  VpnThroughput
+  VpnThroughput,
 };
-
