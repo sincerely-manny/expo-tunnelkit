@@ -2,15 +2,15 @@ import Constants from 'expo-constants';
 
 import { ExpoTunnelkitError } from './ExpoTunnelkit.errors';
 import type {
-  SessionBuilder,
-  VpnDataCount,
-  VpnError,
-  VpnStatus,
-  VpnThroughput,
+    SessionBuilder,
+    VpnDataCount,
+    VpnError,
+    VpnStatus,
+    VpnThroughput,
 } from './ExpoTunnelkit.types';
 import {
-  ExpoTunnelkitEmitter,
-  ExpoTunnelkitModule,
+    ExpoTunnelkitEmitter,
+    ExpoTunnelkitModule,
 } from './ExpoTunnelkitModule';
 
 const NETWORK_EXTENSION_TARGET_NAME = 'TunnelKitNetworkExtension';
@@ -287,6 +287,10 @@ function getVpnStatus(): Promise<VpnStatus> {
  * await ExpoTunnelkit.disconnect();
  * // Remove VPN status listener
  * subscription.remove();
+ * Note: as for expo v52.0.11 old event observer methods are borken/not backwards compatible. Use new expo hooks with `nativeModule` property as the first argument.
+ * @example
+ * import { useEvent } from 'expo';
+ * const status = useEvent(ExpoTunnelkit.module, 'VPNStatusDidChange', 'Unknown');
  */
 const ExpoTunnelkit = {
   setup,
@@ -303,16 +307,17 @@ const ExpoTunnelkit = {
   getVpnLogs,
   getVpnStatus,
   addVpnThroughputListener,
-  eventEmitter: ExpoTunnelkitEmitter,
+  nativeModule: ExpoTunnelkitModule,
 };
 
 export default ExpoTunnelkit;
 
 export type {
-  SessionBuilder,
-  ExpoTunnelkitError as TunnelkitError,
-  VpnDataCount,
-  VpnError,
-  VpnStatus,
-  VpnThroughput,
+    SessionBuilder,
+    ExpoTunnelkitError as TunnelkitError,
+    VpnDataCount,
+    VpnError,
+    VpnStatus,
+    VpnThroughput
 };
+
