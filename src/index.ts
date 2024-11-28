@@ -2,15 +2,15 @@ import Constants from 'expo-constants';
 
 import { ExpoTunnelkitError } from './ExpoTunnelkit.errors';
 import type {
-    SessionBuilder,
-    VpnDataCount,
-    VpnError,
-    VpnStatus,
-    VpnThroughput,
+  SessionBuilder,
+  VpnDataCount,
+  VpnError,
+  VpnStatus,
+  VpnThroughput,
 } from './ExpoTunnelkit.types';
 import {
-    ExpoTunnelkitEmitter,
-    ExpoTunnelkitModule,
+  ExpoTunnelkitEmitter,
+  ExpoTunnelkitModule,
 } from './ExpoTunnelkitModule';
 
 const NETWORK_EXTENSION_TARGET_NAME = 'TunnelKitNetworkExtension';
@@ -203,7 +203,7 @@ function addVpnThroughputListener(
     dataIn: 0,
     dataOut: 0,
     interval: 0,
-    timwstamp: Date.now(),
+    timestamp: Date.now(),
   };
   const throughput = {
     throughputIn: 0,
@@ -223,7 +223,7 @@ function addVpnThroughputListener(
     lastTickDataCount.dataIn = dataIn;
     lastTickDataCount.dataOut = dataOut;
     lastTickDataCount.interval = interval;
-    lastTickDataCount.timwstamp = now;
+    lastTickDataCount.timestamp = now;
     return throughput;
   };
 
@@ -313,11 +313,10 @@ const ExpoTunnelkit = {
 export default ExpoTunnelkit;
 
 export type {
-    SessionBuilder,
-    ExpoTunnelkitError as TunnelkitError,
-    VpnDataCount,
-    VpnError,
-    VpnStatus,
-    VpnThroughput
+  SessionBuilder,
+  ExpoTunnelkitError as TunnelkitError,
+  VpnDataCount,
+  VpnError,
+  VpnStatus,
+  VpnThroughput,
 };
-

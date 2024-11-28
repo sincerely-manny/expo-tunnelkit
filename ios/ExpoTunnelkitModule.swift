@@ -347,6 +347,11 @@ public class ExpoTunnelkitModule: Module {
         name: .NEVPNStatusDidChange,
         object: nil
       )
+      if let appGroup = self.appGroup {
+        let userDefaults = UserDefaults(suiteName: appGroup)
+        // Update the interval in UserDefaults
+        userDefaults?.set(dataCountInterval, forKey: "dataCountInterval")
+      }
     }
 
     OnDestroy {
@@ -356,7 +361,6 @@ public class ExpoTunnelkitModule: Module {
     Function("setup") { (appGroup: String, tunnelIdentifier: String) in
       self.appGroup = appGroup
       self.tunnelIdentifier = tunnelIdentifier
-
       return true
     }
 
@@ -627,7 +631,6 @@ public class ExpoTunnelkitModule: Module {
 
       case "DataCountInterval":
         self.dataCountInterval = Int(value) ?? 1000
-
       default:
         return false
       }
@@ -666,6 +669,7 @@ public class ExpoTunnelkitModule: Module {
         self.builtSession = config.configuration
         print("config: \(config.configuration)")
         assignConfigurationParams(c: config.configuration)
+        self.makeProtocol()
         promise.resolve(true)
       } catch let e {
         promise.reject(
